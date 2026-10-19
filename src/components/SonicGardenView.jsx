@@ -47,16 +47,43 @@ export function SonicGardenView() {
 
   const tracks = [
     {
-      id: 'interstellar',
-      title: 'Interstellar: Cornfield Echoes & Gargantua Zero-G',
-      plant: 'Tillandsia (Zero-G Air Plant)',
-      duration: '31:40',
-      scale: 'A Minor Celestial (Zimmer 432Hz)',
-      author: 'Hans Zimmer × Phyto-Acoustics',
+      id: 'interstellar-cornfield',
+      title: 'Interstellar: Cornfield Chase (The Iconic Theme)',
+      plant: 'Tillandsia Usneoides (Zero-G Air Plant)',
+      duration: '02:07',
+      scale: 'Fast Galloping Pipe Organ Arpeggios',
+      author: 'Hans Zimmer × Temple Church Organ',
       preset: 'interstellar',
-      notes: ['A3', 'C4', 'E4', 'A4', 'B4', 'C5', 'D5', 'E5'],
-      intervalMs: 440,
-      badge: 'ZIMMER SPECIAL'
+      audioFile: '/audio/cornfield_chase.mp3',
+      notes: ['E4', 'F4', 'E4', 'D4', 'C4', 'B3'],
+      intervalMs: 250,
+      badge: 'ICONIC THEME'
+    },
+    {
+      id: 'interstellar-docking',
+      title: 'Interstellar: No Time for Caution (The Docking Climax)',
+      plant: 'Gargantua Gravity Relay Specimen',
+      duration: '04:06',
+      scale: 'Accelerando Ostinato & Massive Organ Drop',
+      author: 'Hans Zimmer × London Organ Suite',
+      preset: 'interstellar',
+      audioFile: '/audio/no_time_for_caution.mp3',
+      notes: ['A2', 'E4', 'A4', 'C5', 'B4', 'E5'],
+      intervalMs: 350,
+      badge: '💥 THE MASSIVE DROP'
+    },
+    {
+      id: 'interstellar-dayone',
+      title: 'Interstellar: Day One (Official Title Track)',
+      plant: 'Calathea Bio-Acoustic Sensor',
+      duration: '03:19',
+      scale: '2-Note Solitude Piano & Swelling Organ',
+      author: 'Hans Zimmer × Abbey Road Studios',
+      preset: 'interstellar',
+      audioFile: '/audio/day_one_theme.mp3',
+      notes: ['A2', 'E4', 'F4', 'C4'],
+      intervalMs: 700,
+      badge: 'ORIGINAL MOTIF'
     },
     {
       id: 1,
@@ -109,10 +136,15 @@ export function SonicGardenView() {
   const [playMode, setPlayMode] = useState('studio'); // 'studio' | 'synth'
   const [playbackTime, setPlaybackTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audioDuration, setAudioDuration] = useState(250);
+  const [audioDuration, setAudioDuration] = useState(127);
   const playbackTimeRef = useRef(0);
-  const totalDuration = (activeItem?.id === 'interstellar' && playMode === 'studio')
-    ? (audioDuration || 250)
+
+  const isInterstellarItem = (item) => {
+    return item && (item.id === 'interstellar' || String(item.id).startsWith('interstellar'));
+  };
+
+  const totalDuration = (isInterstellarItem(activeItem) && playMode === 'studio')
+    ? (audioDuration || 127)
     : 200; // 3 minutes 20 seconds cinematic arc
 
   useEffect(() => {
@@ -128,46 +160,161 @@ export function SonicGardenView() {
 
   // Compute Hans Zimmer Interstellar Dramatic Phase
   const getInterstellarPhase = (sec) => {
+    if (activeItem?.id === 'interstellar-docking') {
+      if (sec < 60) {
+        return {
+          phase: 1,
+          title: 'Phase 1: Ticking Clock',
+          badge: 'TICKING CLOCK',
+          badgeColor: 'text-[#38bdf8] bg-[#38bdf8]/15 border-[#38bdf8]/30',
+          desc: '1.25s mechanical clock ticks as the Endurance spins in deep space.'
+        };
+      } else if (sec < 110) {
+        return {
+          phase: 2,
+          title: 'Phase 2: Ostinato Climb',
+          badge: 'OSTINATO SWELL',
+          badgeColor: 'text-[#47f3bb] bg-[#47f3bb]/15 border-[#47f3bb]/30',
+          desc: 'Accelerating organ ostinato climbs in octaves Am → F → C → G.'
+        };
+      } else if (sec < 130) {
+        return {
+          phase: 3,
+          title: 'Phase 3: "It\'s Necessary"',
+          badge: '⚡ MOUNTING TENSION',
+          badgeColor: 'text-[#f0c04d] bg-[#f0c04d]/20 border-[#f0c04d]/40',
+          desc: 'RPM matching sequence. Roaring brass and massive filter opening!'
+        };
+      } else if (sec < 195) {
+        return {
+          phase: 4,
+          title: 'Phase 4: The Monumental Drop',
+          badge: '💥 THE MASSIVE DROP',
+          badgeColor: 'text-[#ff5449] bg-[#ba1a1a]/30 border-[#ff5449]/50 animate-pulse',
+          desc: 'Loudest cathedral pipe organ blast in movie history! Full lock achieved!'
+        };
+      } else {
+        return {
+          phase: 5,
+          title: 'Phase 5: Docking Resolution',
+          badge: 'HEROIC OUTRO',
+          badgeColor: 'text-[#c084fc] bg-[#c084fc]/15 border-[#c084fc]/30',
+          desc: 'Spins stabilized, heroic harmonic resolution fading into orbit.'
+        };
+      }
+    }
+
+    if (activeItem?.id === 'interstellar-dayone') {
+      if (sec < 70) {
+        return {
+          phase: 1,
+          title: 'Phase 1: Solitude Motif',
+          badge: '2-NOTE PIANO (E-F)',
+          badgeColor: 'text-[#38bdf8] bg-[#38bdf8]/15 border-[#38bdf8]/30',
+          desc: 'Tender 2-note Zimmer piano melody evoking human solitude.'
+        };
+      } else if (sec < 135) {
+        return {
+          phase: 2,
+          title: 'Phase 2: Temple Organ Swell',
+          badge: 'CHURCH ORGAN SWELL',
+          badgeColor: 'text-[#f0c04d] bg-[#f0c04d]/20 border-[#f0c04d]/40',
+          desc: 'London Temple Church pipe organ envelopes the melody in acoustics.'
+        };
+      } else {
+        return {
+          phase: 3,
+          title: 'Phase 3: Grand Theme',
+          badge: 'COSMIC RESOLUTION',
+          badgeColor: 'text-[#47f3bb] bg-[#47f3bb]/15 border-[#47f3bb]/30',
+          desc: 'Warm cosmic chords drifting toward the stars.'
+        };
+      }
+    }
+
+    // Default: Cornfield Chase (The World-Famous Theme)
     if (sec < 35) {
       return {
         phase: 1,
-        title: 'Phase 1: Cosmic Solitude',
-        badge: 'INTRO MOTIF',
+        title: 'Phase 1: Organ Flutter',
+        badge: 'GALLOPING ARPEGGIO',
         badgeColor: 'text-[#38bdf8] bg-[#38bdf8]/15 border-[#38bdf8]/30',
-        desc: 'Quiet 2-note Zimmer solitude theme (E4 / F4) with soft pedal bass.'
+        desc: 'Rapid breathless pipe organ arpeggios dancing across the keys.'
       };
-    } else if (sec < 85) {
+    } else if (sec < 65) {
       return {
         phase: 2,
-        title: 'Phase 2: Clockwork Ostinato',
-        badge: 'OSTINATO PULSE',
+        title: 'Phase 2: Accelerating Chase',
+        badge: 'ORCHESTRAL MOMENTUM',
         badgeColor: 'text-[#47f3bb] bg-[#47f3bb]/15 border-[#47f3bb]/30',
-        desc: 'Steady 4-chord pulsating arpeggio begins ticking over Am → F → C → G.'
+        desc: 'Strings and winds surge forward chasing the surveillance drone!'
       };
-    } else if (sec < 130) {
+    } else if (sec < 100) {
       return {
         phase: 3,
-        title: 'Phase 3: Gravitational Tension',
-        badge: '⚡ BUILDING TENSION',
-        badgeColor: 'text-[#f0c04d] bg-[#f0c04d]/20 border-[#f0c04d]/40',
-        desc: 'Accelerando tempo, filter sweeps open, sub-bass enters as tension mounts!'
-      };
-    } else if (sec < 195) {
-      return {
-        phase: 4,
-        title: 'Phase 4: The Monumental Drop',
-        badge: '💥 THE DROP (CLIMAX)',
+        title: 'Phase 3: The Epic Crescendo',
+        badge: '💥 THE FULL CRESCENDO',
         badgeColor: 'text-[#ff5449] bg-[#ba1a1a]/30 border-[#ff5449]/50 animate-pulse',
-        desc: 'Full cathedral organ explosion with roaring octave bass and soaring heroic melody!'
+        desc: 'Massive full cathedral organ and brass blast in pure exhilaration!'
       };
     } else {
       return {
-        phase: 5,
-        title: 'Phase 5: Event Horizon',
-        badge: 'ZERO-G OUTRO',
+        phase: 4,
+        title: 'Phase 4: Heroic Climax',
+        badge: 'HEROIC FINALE',
         badgeColor: 'text-[#c084fc] bg-[#c084fc]/15 border-[#c084fc]/30',
-        desc: 'Harmonics resolve into quiet stardust, fading into deep cosmic stillness.'
+        desc: 'The truck emerges from the cornfield into triumphant open skies.'
       };
+    }
+  };
+
+  // Adaptive Quick Jump points
+  const getJumpPoints = () => {
+    if (activeItem?.id === 'interstellar-docking') {
+      return [
+        { time: 0, label: '0:00 Ticking Clock' },
+        { time: 60, label: '1:00 Ostinato' },
+        { time: 110, label: '1:50 "It\'s Necessary"' },
+        { time: 130, label: '2:10 THE DROP', isDrop: true },
+        { time: 200, label: '3:20 Climax' }
+      ];
+    }
+    if (activeItem?.id === 'interstellar-dayone') {
+      return [
+        { time: 0, label: '0:00 2-Note Piano' },
+        { time: 70, label: '1:10 Organ Swell', isDrop: true },
+        { time: 135, label: '2:15 Grand Theme' }
+      ];
+    }
+    // Default: Cornfield Chase
+    return [
+      { time: 0, label: '0:00 Organ Intro' },
+      { time: 35, label: '0:35 Rising Chase' },
+      { time: 65, label: '1:05 THE CRESCENDO', isDrop: true },
+      { time: 100, label: '1:40 Heroic Climax' }
+    ];
+  };
+
+  // Quick switch between Interstellar tracks
+  const selectInterstellarTrack = (trackId) => {
+    const target = tracks.find((t) => t.id === trackId);
+    if (!target) return;
+    setActiveItem({
+      type: 'track',
+      id: target.id,
+      title: target.title,
+      plant: target.plant,
+      audioFile: target.audioFile
+    });
+    setPlaybackTime(0);
+    playbackTimeRef.current = 0;
+    setIsPlaying(true);
+    if (playMode === 'studio' && audioRef.current) {
+      audioRef.current.src = target.audioFile;
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {});
+    } else {
+      audioEngine.unlock();
     }
   };
 
@@ -177,7 +324,7 @@ export function SonicGardenView() {
     setPlaybackTime(clamped);
     playbackTimeRef.current = clamped;
 
-    if (activeItem?.id === 'interstellar' && playMode === 'studio' && audioRef.current) {
+    if (isInterstellarItem(activeItem) && playMode === 'studio' && audioRef.current) {
       audioRef.current.currentTime = clamped;
       if (!isPlaying) {
         audioRef.current.play().catch(() => {});
@@ -188,12 +335,7 @@ export function SonicGardenView() {
 
     audioEngine.unlock();
     if (!activeItem) {
-      setActiveItem({
-        type: 'track',
-        id: 'interstellar',
-        title: 'Interstellar: Cornfield Echoes & Gargantua Zero-G',
-        plant: 'Tillandsia (Zero-G Air Plant)'
-      });
+      setActiveItem(tracks[0]);
       setIsPlaying(true);
     } else if (!isPlaying) {
       setIsPlaying(true);
@@ -226,8 +368,12 @@ export function SonicGardenView() {
     if (!activeItem || !isPlaying) return;
 
     // In studio mode for Interstellar, use high-fidelity audio element
-    if (activeItem.type === 'track' && activeItem.id === 'interstellar' && playMode === 'studio') {
+    if (isInterstellarItem(activeItem) && playMode === 'studio') {
       if (audioRef.current) {
+        const targetSrc = activeItem.audioFile || '/audio/cornfield_chase.mp3';
+        if (!audioRef.current.src.endsWith(targetSrc)) {
+          audioRef.current.src = targetSrc;
+        }
         audioRef.current.currentTime = playbackTimeRef.current;
         audioRef.current.play().catch((e) => console.log('Audio play error:', e));
       }
@@ -439,10 +585,20 @@ export function SonicGardenView() {
       setIsPlaying(false);
       if (audioRef.current) audioRef.current.pause();
     } else {
-      setActiveItem({ type: 'track', id: t.id, title: t.title, plant: t.plant });
+      setActiveItem({
+        type: 'track',
+        id: t.id,
+        title: t.title,
+        plant: t.plant,
+        audioFile: t.audioFile
+      });
       setIsPlaying(true);
-      if (t.id === 'interstellar' && playMode === 'studio') {
+      if (isInterstellarItem(t) && playMode === 'studio') {
         if (audioRef.current) {
+          const targetSrc = t.audioFile || '/audio/cornfield_chase.mp3';
+          if (!audioRef.current.src.endsWith(targetSrc)) {
+            audioRef.current.src = targetSrc;
+          }
           audioRef.current.currentTime = playbackTimeRef.current;
           audioRef.current.play().catch(() => {});
         }
@@ -481,8 +637,12 @@ export function SonicGardenView() {
       if (audioRef.current) audioRef.current.pause();
     } else {
       setIsPlaying(true);
-      if (activeItem.id === 'interstellar' && playMode === 'studio') {
+      if (isInterstellarItem(activeItem) && playMode === 'studio') {
         if (audioRef.current) {
+          const targetSrc = activeItem.audioFile || '/audio/cornfield_chase.mp3';
+          if (!audioRef.current.src.endsWith(targetSrc)) {
+            audioRef.current.src = targetSrc;
+          }
           audioRef.current.currentTime = playbackTimeRef.current;
           audioRef.current.play().catch(() => {});
         }
@@ -559,9 +719,9 @@ export function SonicGardenView() {
         </div>
 
         {/* Global Floating Master Seed Player Card & Timeline Scrubber */}
-        <div className={`flex flex-col gap-3 p-4 md:p-5 rounded-2xl border transition-all shadow-xl w-full xl:w-auto xl:min-w-[500px] ${
+        <div className={`flex flex-col gap-3 p-4 md:p-5 rounded-2xl border transition-all shadow-xl w-full xl:w-auto xl:min-w-[550px] ${
           isPlaying
-            ? activeItem?.id === 'interstellar'
+            ? isInterstellarItem(activeItem)
               ? 'bg-[#0f1f2e] border-[#38bdf8]/60 shadow-[0_0_30px_rgba(56,189,248,0.25)]'
               : 'bg-[#252b28] border-[#47f3bb]/50 shadow-[0_0_24px_rgba(6,214,160,0.2)]'
             : 'bg-[#1b211e] border-[#3b4a43]/40'
@@ -569,7 +729,7 @@ export function SonicGardenView() {
           {/* HTML5 Audio Tag for High-Fidelity Studio Master Recordings */}
           <audio
             ref={audioRef}
-            src="/audio/interstellar.mp3"
+            src={activeItem?.audioFile || '/audio/cornfield_chase.mp3'}
             preload="auto"
             onLoadedMetadata={(e) => {
               if (e.target.duration && !isNaN(e.target.duration)) {
@@ -577,7 +737,7 @@ export function SonicGardenView() {
               }
             }}
             onTimeUpdate={(e) => {
-              if (activeItem?.id === 'interstellar' && playMode === 'studio') {
+              if (isInterstellarItem(activeItem) && playMode === 'studio') {
                 const cur = Math.floor(e.target.currentTime);
                 setPlaybackTime(cur);
                 playbackTimeRef.current = cur;
@@ -610,17 +770,17 @@ export function SonicGardenView() {
                   <span className={`font-['JetBrains_Mono'] text-[9px] font-bold uppercase tracking-wider ${isPlaying ? 'text-[#47f3bb]' : 'text-[#bacac1]'}`}>
                     {isPlaying ? 'LIVE STREAMING' : 'STANDBY'}
                   </span>
-                  {activeItem?.id === 'interstellar' && (
+                  {isInterstellarItem(activeItem) && (
                     <span className={`px-2 py-0.5 rounded-full border text-[9px] font-extrabold tracking-wider uppercase font-['JetBrains_Mono'] ${getInterstellarPhase(playbackTime).badgeColor}`}>
                       {getInterstellarPhase(playbackTime).badge}
                     </span>
                   )}
                 </div>
                 <span className="font-['Syne'] text-sm sm:text-base font-bold text-[#dde4de]">
-                  {activeItem ? activeItem.title : 'Root Systems & Cloud Canopy'}
+                  {activeItem ? activeItem.title : 'Interstellar: Cornfield Chase (The Iconic Theme)'}
                 </span>
                 <span className="font-['JetBrains_Mono'] text-[10px] text-[#f0c04d]">
-                  {activeItem ? `Active Specimen: ${activeItem.plant}` : 'Calathea Roseopicta • 432 Hz Resonant Matrix'}
+                  {activeItem ? `Active Specimen: ${activeItem.plant}` : 'Tillandsia Usneoides • Zero-G 432 Hz Resonant Matrix'}
                 </span>
               </div>
             </div>
@@ -644,8 +804,59 @@ export function SonicGardenView() {
             </div>
           </div>
 
+          {/* Quick Switch between the 3 Famous Interstellar Tracks */}
+          {isInterstellarItem(activeItem) && (
+            <div className="flex flex-col gap-2 bg-[#09100c] p-2.5 rounded-xl border border-[#38bdf8]/30">
+              <div className="flex items-center justify-between">
+                <span className="font-['JetBrains_Mono'] text-[10px] text-[#38bdf8] uppercase font-bold flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-[#38bdf8]" /> Choose Authentic Hans Zimmer Master:
+                </span>
+                <span className="text-[9px] font-['JetBrains_Mono'] text-[#bacac1]">
+                  Official 320kbps Master Audio
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
+                <button
+                  onClick={() => selectInterstellarTrack('interstellar-cornfield')}
+                  className={`px-2.5 py-1.5 rounded-lg text-xs font-['JetBrains_Mono'] font-bold text-left transition-all cursor-pointer flex flex-col ${
+                    activeItem?.id === 'interstellar-cornfield'
+                      ? 'bg-[#38bdf8] text-[#082f49] shadow-[0_0_12px_rgba(56,189,248,0.4)]'
+                      : 'bg-[#171d1a] text-[#bacac1] hover:text-white hover:bg-[#252b28]'
+                  }`}
+                >
+                  <span className="font-extrabold flex items-center gap-1">🌽 Cornfield Chase</span>
+                  <span className="text-[9px] opacity-80">The Fast Iconic Theme (02:07)</span>
+                </button>
+
+                <button
+                  onClick={() => selectInterstellarTrack('interstellar-docking')}
+                  className={`px-2.5 py-1.5 rounded-lg text-xs font-['JetBrains_Mono'] font-bold text-left transition-all cursor-pointer flex flex-col ${
+                    activeItem?.id === 'interstellar-docking'
+                      ? 'bg-gradient-to-r from-[#ba1a1a] to-[#ff5449] text-white shadow-[0_0_12px_rgba(255,84,73,0.5)]'
+                      : 'bg-[#171d1a] text-[#bacac1] hover:text-white hover:bg-[#252b28]'
+                  }`}
+                >
+                  <span className="font-extrabold flex items-center gap-1">💥 No Time For Caution</span>
+                  <span className="text-[9px] opacity-80">Docking Climax & Massive Drop (04:06)</span>
+                </button>
+
+                <button
+                  onClick={() => selectInterstellarTrack('interstellar-dayone')}
+                  className={`px-2.5 py-1.5 rounded-lg text-xs font-['JetBrains_Mono'] font-bold text-left transition-all cursor-pointer flex flex-col ${
+                    activeItem?.id === 'interstellar-dayone'
+                      ? 'bg-[#f0c04d] text-[#2d2200] shadow-[0_0_12px_rgba(240,192,77,0.4)]'
+                      : 'bg-[#171d1a] text-[#bacac1] hover:text-white hover:bg-[#252b28]'
+                  }`}
+                >
+                  <span className="font-extrabold flex items-center gap-1">🎹 Day One</span>
+                  <span className="text-[9px] opacity-80">Official Title Motif (03:19)</span>
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Dual Engine Switcher Pill (Active on Interstellar) */}
-          {activeItem?.id === 'interstellar' && (
+          {isInterstellarItem(activeItem) && (
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 bg-[#09100c] px-3 py-2 rounded-xl border border-[#3b4a43]/40">
               <div className="flex items-center gap-1.5">
                 <span className="font-['JetBrains_Mono'] text-[10px] text-[#bacac1] uppercase font-bold">
@@ -708,54 +919,32 @@ export function SonicGardenView() {
           </div>
 
           {/* Interstellar Quick-Jump Phase Markers */}
-          {activeItem?.id === 'interstellar' && (
+          {isInterstellarItem(activeItem) && (
             <div className="flex items-center gap-1.5 flex-wrap pt-1 border-t border-[#3b4a43]/20">
               <span className="font-['JetBrains_Mono'] text-[9px] text-[#bacac1] uppercase font-bold mr-1">
                 Jump To:
               </span>
-              <button
-                onClick={() => seekTo(0)}
-                className={`px-2 py-0.5 rounded text-[10px] font-['JetBrains_Mono'] font-bold transition-all cursor-pointer ${
-                  playbackTime < 30 ? 'bg-[#38bdf8] text-[#082f49]' : 'bg-[#171d1a] text-[#bacac1] hover:text-white'
-                }`}
-              >
-                0:00 Intro
-              </button>
-              <button
-                onClick={() => seekTo(30)}
-                className={`px-2 py-0.5 rounded text-[10px] font-['JetBrains_Mono'] font-bold transition-all cursor-pointer ${
-                  playbackTime >= 30 && playbackTime < 75 ? 'bg-[#47f3bb] text-[#003827]' : 'bg-[#171d1a] text-[#bacac1] hover:text-white'
-                }`}
-              >
-                0:30 Ostinato
-              </button>
-              <button
-                onClick={() => seekTo(75)}
-                className={`px-2 py-0.5 rounded text-[10px] font-['JetBrains_Mono'] font-bold transition-all cursor-pointer ${
-                  playbackTime >= 75 && playbackTime < 115 ? 'bg-[#f0c04d] text-[#2d2200]' : 'bg-[#171d1a] text-[#bacac1] hover:text-white'
-                }`}
-              >
-                1:15 Tension
-              </button>
-              <button
-                onClick={() => seekTo(115)}
-                className={`px-2.5 py-0.5 rounded text-[10px] font-['JetBrains_Mono'] font-extrabold transition-all cursor-pointer flex items-center gap-1 ${
-                  playbackTime >= 115 && playbackTime < 170
-                    ? 'bg-gradient-to-r from-[#ba1a1a] to-[#ff5449] text-white shadow-[0_0_12px_rgba(255,84,73,0.5)] animate-pulse'
-                    : 'bg-[#ba1a1a]/30 text-[#ffb4ab] border border-[#ba1a1a]/50 hover:bg-[#ba1a1a] hover:text-white'
-                }`}
-              >
-                <Flame className="w-3 h-3" />
-                1:55 THE DROP
-              </button>
-              <button
-                onClick={() => seekTo(170)}
-                className={`px-2 py-0.5 rounded text-[10px] font-['JetBrains_Mono'] font-bold transition-all cursor-pointer ${
-                  playbackTime >= 170 ? 'bg-[#c084fc] text-[#2e1065]' : 'bg-[#171d1a] text-[#bacac1] hover:text-white'
-                }`}
-              >
-                2:50 Outro
-              </button>
+              {getJumpPoints().map((pt, idx) => {
+                const isCurrent = Math.abs(playbackTime - pt.time) < 15;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => seekTo(pt.time)}
+                    className={`px-2.5 py-0.5 rounded text-[10px] font-['JetBrains_Mono'] font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                      pt.isDrop
+                        ? isCurrent
+                          ? 'bg-gradient-to-r from-[#ba1a1a] to-[#ff5449] text-white shadow-[0_0_12px_rgba(255,84,73,0.5)] animate-pulse'
+                          : 'bg-[#ba1a1a]/30 text-[#ffb4ab] border border-[#ba1a1a]/50 hover:bg-[#ba1a1a] hover:text-white'
+                        : isCurrent
+                          ? 'bg-[#38bdf8] text-[#082f49]'
+                          : 'bg-[#171d1a] text-[#bacac1] hover:text-white'
+                    }`}
+                  >
+                    {pt.isDrop && <Flame className="w-3 h-3 text-[#ff5449]" />}
+                    {pt.label}
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>
@@ -881,7 +1070,7 @@ export function SonicGardenView() {
             <tbody className="divide-y divide-[#3b4a43]/20">
               {tracks.map((t) => {
                 const isPlaying = activeItem?.type === 'track' && activeItem.id === t.id;
-                const isInterstellar = t.id === 'interstellar';
+                const isInterstellar = isInterstellarItem(t);
                 return (
                   <tr
                     key={t.id}
