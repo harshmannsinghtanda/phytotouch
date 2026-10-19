@@ -3,8 +3,14 @@ import { Play, Pause, Radio, Volume2, Globe, Heart, Download, Share2, Sparkles, 
 import { audioEngine } from '../audio/PlantAudioEngine';
 
 export function SonicGardenView() {
-  // Global active audio source state: null or { type: 'stream' | 'track' | 'master', id: string | number, title: string, plant: string }
-  const [activeItem, setActiveItem] = useState(null);
+  // Global active audio source state: defaults to Interstellar Cornfield Chase master track
+  const [activeItem, setActiveItem] = useState({
+    type: 'track',
+    id: 'interstellar-cornfield',
+    title: 'Interstellar: Cornfield Chase (The Iconic Theme)',
+    plant: 'Tillandsia Usneoides (Zero-G Air Plant)',
+    audioFile: '/audio/cornfield_chase.mp3'
+  });
 
   const streams = [
     {
