@@ -1,0 +1,64 @@
+:root {
+  --bg-primary: #0e1512;
+  --primary-accent: #47f3bb;
+  --secondary-accent: #f0c04d;
+}
+
+body {
+  margin: 0;
+  background-color: #0e1512;
+  color: #dde4de;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Material symbol styling */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  display: inline-block;
+  user-select: none;
+}
+
+/* Bioluminescent Glow Utilities */
+.bio-glow-primary {
+  box-shadow: 0 0 20px rgba(6, 214, 160, 0.35);
+}
+
+.bio-glow-secondary {
+  box-shadow: 0 0 20px rgba(240, 192, 77, 0.35);
+}
+
+.glass-panel {
+  background: rgba(23, 29, 26, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(71, 243, 187, 0.12);
+}
+
+/* Tactile button press feedback */
+.tactile-btn {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.tactile-btn:active {
+  transform: scale(0.97);
+}
+
+/* Leaf Node hover pulse */
+.leaf-node {
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+}
+.leaf-node:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(71, 243, 187, 0.6));
+}
+.leaf-node:active {
+  transform: scale(0.95);
+}
+
+/* Custom range slider thumb */
+input[type="range"] {
+  accent-color: #47f3bb;
+}
