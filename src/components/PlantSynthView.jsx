@@ -513,13 +513,14 @@ export function PlantSynthView({ onConnectHardware }) {
                   Polyphonic 32-bit
                 </span>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
                 {[
                   { id: 'grand_piano', label: 'Steinway Piano', icon: '🎹' },
                   { id: 'cello', label: 'Concert Cello', icon: '🎻' },
                   { id: 'kalimba', label: 'Thumb Kalimba', icon: '🎋' },
                   { id: 'bansuri_flute', label: 'Vedic Bansuri', icon: '🪈' },
-                  { id: 'celestial_pad', label: 'Chamber Pad', icon: '🌌' }
+                  { id: 'celestial_pad', label: 'Chamber Pad', icon: '🌌' },
+                  { id: 'interstellar', label: 'Interstellar Organ', icon: '✨' }
                 ].map((inst) => {
                   const isSelected = selectedPreset === inst.id;
                   return (
@@ -528,7 +529,9 @@ export function PlantSynthView({ onConnectHardware }) {
                       onClick={() => handleSelectPreset(inst.id)}
                       className={`flex flex-col items-center justify-center p-2 rounded-xl border transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-[#252b28] border-[#47f3bb] text-white shadow-[0_0_12px_rgba(71,243,187,0.3)] scale-[1.02]'
+                          ? inst.id === 'interstellar'
+                            ? 'bg-[#0f283d] border-[#38bdf8] text-white shadow-[0_0_15px_rgba(56,189,248,0.4)] scale-[1.02]'
+                            : 'bg-[#252b28] border-[#47f3bb] text-white shadow-[0_0_12px_rgba(71,243,187,0.3)] scale-[1.02]'
                           : 'bg-[#1b211e] border-[#3b4a43]/30 text-[#bacac1] hover:bg-[#252b28] hover:text-white'
                       }`}
                     >
@@ -554,14 +557,17 @@ export function PlantSynthView({ onConnectHardware }) {
                     { id: 'darbari', label: 'Darbari (Midnight)' },
                     { id: 'shivranjani', label: 'Shivranjani' },
                     { id: 'saptak', label: '432Hz Saptak' },
-                    { id: 'solfeggio', label: '528Hz Solfeggio' }
+                    { id: 'solfeggio', label: '528Hz Solfeggio' },
+                    { id: 'interstellar', label: '✨ Interstellar (Zimmer)' }
                   ].map((s) => (
                     <button
                       key={s.id}
                       onClick={() => handleSelectScale(s.id)}
                       className={`px-2.5 py-1 rounded text-[11px] font-['JetBrains_Mono'] font-semibold transition-all cursor-pointer ${
                         selectedScale === s.id
-                          ? 'bg-[#06d6a0] text-[#003827] shadow-[0_0_10px_rgba(6,214,160,0.4)]'
+                          ? s.id === 'interstellar'
+                            ? 'bg-[#38bdf8] text-[#082f49] font-bold shadow-[0_0_12px_rgba(56,189,248,0.5)]'
+                            : 'bg-[#06d6a0] text-[#003827] shadow-[0_0_10px_rgba(6,214,160,0.4)]'
                           : 'text-[#bacac1] hover:text-[#dde4de] hover:bg-[#1b211e]'
                       }`}
                     >

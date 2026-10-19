@@ -54,6 +54,12 @@ export const SCALES = {
     swaras: ['Ut', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si', 'Uṫ'],
     desc: 'Resonant cellular regeneration frequency aligned with biological water resonance.',
     notes: ['C4', 'D4', 'E4', 'G4', 'A4', 'C5', 'D5', 'G5']
+  },
+  interstellar: {
+    name: 'Interstellar Ethereal (Hans Zimmer)',
+    swaras: ['A3', 'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'C5'],
+    desc: 'Hans Zimmer cosmic cinematic motif in natural 432 Hz Pythagorean A-minor.',
+    notes: ['A3', 'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'C5']
   }
 };
 
@@ -93,6 +99,13 @@ export const PRESETS = {
     desc: 'Lush natural wooden acoustic chamber with shimmering harmonic overtones',
     type: 'pad',
     color: '#818cf8'
+  },
+  interstellar: {
+    name: 'Interstellar Organ',
+    icon: '✨',
+    desc: 'Ethereal celestial church organ and glass harmonics inspired by Hans Zimmer',
+    type: 'organ',
+    color: '#38bdf8'
   }
 };
 
@@ -274,6 +287,19 @@ class PlantAudioEngine {
       this.padSynth.connect(this.synthBus);
       this.padSynth.connect(this.reverb);
 
+      // Preset 5: Ethereal Interstellar Celestial Organ & Shimmer Chimes
+      this.interstellarSynth = new Tone.PolySynth(Tone.Synth, {
+        maxPolyphony: 12,
+        oscillator: { type: 'triangle' },
+        envelope: { attack: 0.12, decay: 3.2, sustain: 0.65, release: 3.2 }
+      });
+      this.interstellarSynth.volume.value = -6;
+      this.interstellarSynth.set({ detune: -31.77 });
+      this.interstellarFilter = new Tone.Filter(3200, 'lowpass').connect(this.synthBus);
+      this.interstellarSynth.connect(this.interstellarFilter);
+      this.interstellarSynth.connect(this.reverb);
+      this.interstellarSynth.connect(this.delay);
+
       this.isInitialized = true;
     } catch (e) {
       console.warn('Audio graph initialization warning:', e);
@@ -343,6 +369,10 @@ class PlantAudioEngine {
       case 'bansuri_flute':
         return this.bansuriSynth;
       case 'celestial_pad':
+        return this.padSynth;
+      case 'interstellar':
+      case 'interstellar_organ':
+        return this.interstellarSynth;
       default:
         return this.padSynth;
     }
@@ -388,7 +418,7 @@ class PlantAudioEngine {
 
     // Velocity scaling (0.20 to 0.48) - natural acoustic touch sensitivity
     const velocity = Math.min(Math.max(intensity * 0.48, 0.20), 0.48);
-    const duration = (this.currentPreset === 'celestial_pad' || this.currentPreset === 'cello') ? '2n' : '4n';
+    const duration = (this.currentPreset === 'celestial_pad' || this.currentPreset === 'cello' || this.currentPreset === 'interstellar') ? '2n' : '4n';
 
     try {
       synth.triggerAttackRelease(actualFreq, duration, undefined, velocity);

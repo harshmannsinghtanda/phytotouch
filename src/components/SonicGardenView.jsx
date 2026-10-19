@@ -47,6 +47,18 @@ export function SonicGardenView() {
 
   const tracks = [
     {
+      id: 'interstellar',
+      title: 'Interstellar: Cornfield Echoes & Gargantua Zero-G',
+      plant: 'Tillandsia (Zero-G Air Plant)',
+      duration: '31:40',
+      scale: 'A Minor Celestial (Zimmer 432Hz)',
+      author: 'Hans Zimmer × Phyto-Acoustics',
+      preset: 'interstellar',
+      notes: ['A3', 'C4', 'E4', 'A4', 'B4', 'C5', 'D5', 'E5'],
+      intervalMs: 440,
+      badge: 'ZIMMER SPECIAL'
+    },
+    {
       id: 1,
       title: 'Perforated Veins in Berlin',
       plant: 'Monstera Deliciosa',
@@ -96,6 +108,66 @@ export function SonicGardenView() {
   useEffect(() => {
     if (!activeItem) return;
     audioEngine.unlock();
+
+    // Special dedicated Hans Zimmer Interstellar Ethereal Soundscape Loop
+    if (activeItem.type === 'track' && activeItem.id === 'interstellar') {
+      audioEngine.setPreset('interstellar');
+
+      // Iconic 4-chord progression: Am -> F -> C -> G/Em
+      const chords = [
+        {
+          bass: 'A2',
+          arpeggio: ['E4', 'A4', 'C5', 'B4', 'E5', 'B4', 'C5', 'A4'],
+          soaringLead: 'E5'
+        },
+        {
+          bass: 'F2',
+          arpeggio: ['F4', 'A4', 'C5', 'E5', 'F5', 'E5', 'C5', 'A4'],
+          soaringLead: 'D5'
+        },
+        {
+          bass: 'C3',
+          arpeggio: ['G4', 'C5', 'E5', 'G5', 'E5', 'C5', 'G4', 'E4'],
+          soaringLead: 'C5'
+        },
+        {
+          bass: 'G2',
+          arpeggio: ['D4', 'G4', 'B4', 'D5', 'E5', 'D5', 'B4', 'G4'],
+          soaringLead: 'B4'
+        }
+      ];
+
+      let step = 0;
+      // Trigger opening church organ pedal bass & opening harmonic note
+      audioEngine.triggerAttackRelease('A2', '1m', 0.45);
+      audioEngine.triggerAttackRelease('E4', '2n', 0.35);
+
+      const timer = setInterval(() => {
+        step++;
+        const chordIdx = Math.floor((step % 32) / 8);
+        const noteIdx = step % 8;
+        const currentChord = chords[chordIdx];
+
+        // 1. Deep church organ pedal bass on measure start
+        if (noteIdx === 0) {
+          audioEngine.triggerAttackRelease(currentChord.bass, '1m', 0.42);
+        }
+
+        // 2. High ethereal soaring climax note floating across the organ
+        if (noteIdx === 0 && step >= 16) {
+          setTimeout(() => {
+            audioEngine.triggerAttackRelease(currentChord.soaringLead, '2n', 0.32);
+          }, 120);
+        }
+
+        // 3. Iconic pulsating clockwork arpeggio ostinato
+        const note = currentChord.arpeggio[noteIdx];
+        const vel = 0.28 + (noteIdx % 2 === 0 ? 0.08 : 0);
+        audioEngine.triggerAttackRelease(note, '4n', vel);
+      }, 440);
+
+      return () => clearInterval(timer);
+    }
 
     let notes = ['C4', 'E4', 'G4', 'B4'];
     let preset = 'grand_piano';
@@ -152,7 +224,7 @@ export function SonicGardenView() {
         setTimeout(() => audioEngine.triggerAttackRelease(c3, '2n', 0.24), 120);
       } else {
         const velocity = 0.26 + Math.random() * 0.18;
-        const dur = (preset === 'celestial_pad' || preset === 'cello') ? '2n' : '4n';
+        const dur = (preset === 'celestial_pad' || preset === 'cello' || preset === 'interstellar') ? '2n' : '4n';
         audioEngine.triggerAttackRelease(note, dur, velocity);
       }
     }, intervalMs);
@@ -403,23 +475,40 @@ export function SonicGardenView() {
             <tbody className="divide-y divide-[#3b4a43]/20">
               {tracks.map((t) => {
                 const isPlaying = activeItem?.type === 'track' && activeItem.id === t.id;
+                const isInterstellar = t.id === 'interstellar';
                 return (
                   <tr
                     key={t.id}
-                    className={`transition-colors ${
-                      isPlaying ? 'bg-[#252b28]/80' : 'hover:bg-[#1b211e]/70'
+                    className={`transition-all ${
+                      isPlaying
+                        ? isInterstellar
+                          ? 'bg-[#0f1f2e] border-l-4 border-l-[#38bdf8] shadow-[inset_0_0_20px_rgba(56,189,248,0.15)]'
+                          : 'bg-[#252b28]/80 border-l-4 border-l-[#47f3bb]'
+                        : isInterstellar
+                          ? 'bg-[#0c1822]/60 hover:bg-[#112332]/80 border-l-2 border-l-[#38bdf8]/40'
+                          : 'hover:bg-[#1b211e]/70'
                     }`}
                   >
-                    <td className="py-3.5 px-4 font-bold text-[#dde4de] flex items-center gap-2">
-                      <Music className={`w-4 h-4 ${isPlaying ? 'text-[#47f3bb] animate-bounce' : 'text-[#bacac1]'}`} />
-                      <span>{t.title}</span>
-                      {isPlaying && (
-                        <span className="ml-1 px-1.5 py-0.5 rounded bg-[#47f3bb]/20 text-[#47f3bb] text-[9px] font-bold">
-                          PLAYING NOW
-                        </span>
-                      )}
+                    <td className="py-3.5 px-4 font-bold text-[#dde4de]">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Music className={`w-4 h-4 flex-shrink-0 ${isPlaying ? (isInterstellar ? 'text-[#38bdf8] animate-bounce' : 'text-[#47f3bb] animate-bounce') : (isInterstellar ? 'text-[#38bdf8]' : 'text-[#bacac1]')}`} />
+                        <span className={isInterstellar ? 'text-white font-extrabold tracking-wide' : ''}>{t.title}</span>
+                        {t.badge && (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#38bdf8]/15 border border-[#38bdf8]/40 text-[#38bdf8] text-[9px] font-extrabold tracking-wider animate-pulse shadow-[0_0_10px_rgba(56,189,248,0.25)]">
+                            <Sparkles className="w-2.5 h-2.5" />
+                            {t.badge}
+                          </span>
+                        )}
+                        {isPlaying && (
+                          <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
+                            isInterstellar ? 'bg-[#38bdf8]/20 text-[#38bdf8]' : 'bg-[#47f3bb]/20 text-[#47f3bb]'
+                          }`}>
+                            PLAYING NOW
+                          </span>
+                        )}
+                      </div>
                     </td>
-                    <td className="py-3.5 px-4 text-[#47f3bb]">{t.plant}</td>
+                    <td className={`py-3.5 px-4 ${isInterstellar ? 'text-[#38bdf8] font-medium' : 'text-[#47f3bb]'}`}>{t.plant}</td>
                     <td className="py-3.5 px-4 text-[#ffdf9d]">{t.scale}</td>
                     <td className="py-3.5 px-4 text-[#bacac1]">{t.duration}</td>
                     <td className="py-3.5 px-4 text-[#dde4de]">{t.author}</td>
@@ -429,7 +518,9 @@ export function SonicGardenView() {
                         className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ml-auto ${
                           isPlaying
                             ? 'bg-[#ba1a1a] text-white shadow-[0_0_12px_rgba(255,180,171,0.4)]'
-                            : 'bg-[#1b211e] hover:bg-[#47f3bb] hover:text-[#003827] text-[#47f3bb] border border-[#47f3bb]/30'
+                            : isInterstellar
+                              ? 'bg-[#0284c7] hover:bg-[#38bdf8] text-white hover:text-[#082f49] shadow-[0_0_15px_rgba(56,189,248,0.35)] hover:scale-105'
+                              : 'bg-[#1b211e] hover:bg-[#47f3bb] hover:text-[#003827] text-[#47f3bb] border border-[#47f3bb]/30'
                         }`}
                       >
                         {isPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3 fill-current" />}
