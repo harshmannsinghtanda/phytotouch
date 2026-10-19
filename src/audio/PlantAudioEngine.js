@@ -484,6 +484,14 @@ class PlantAudioEngine {
     }
   }
 
+  setFilterCutoff(hz) {
+    if (this.interstellarFilter) {
+      try {
+        this.interstellarFilter.frequency.rampTo(Math.min(Math.max(hz, 400), 8000), 0.1);
+      } catch (e) {}
+    }
+  }
+
   setScale(scaleKey) {
     if (SCALES[scaleKey]) {
       this.currentScale = scaleKey;
