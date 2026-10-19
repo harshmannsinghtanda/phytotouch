@@ -105,10 +105,15 @@ export function SonicGardenView() {
   ];
 
   // Scrubber timeline state (in seconds)
+  const audioRef = useRef(null);
+  const [playMode, setPlayMode] = useState('studio'); // 'studio' | 'synth'
   const [playbackTime, setPlaybackTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [audioDuration, setAudioDuration] = useState(250);
   const playbackTimeRef = useRef(0);
-  const totalDuration = 200; // 3 minutes 20 seconds cinematic arc
+  const totalDuration = (activeItem?.id === 'interstellar' && playMode === 'studio')
+    ? (audioDuration || 250)
+    : 200; // 3 minutes 20 seconds cinematic arc
 
   useEffect(() => {
     playbackTimeRef.current = playbackTime;
@@ -123,7 +128,7 @@ export function SonicGardenView() {
 
   // Compute Hans Zimmer Interstellar Dramatic Phase
   const getInterstellarPhase = (sec) => {
-    if (sec < 30) {
+    if (sec < 35) {
       return {
         phase: 1,
         title: 'Phase 1: Cosmic Solitude',
@@ -131,7 +136,7 @@ export function SonicGardenView() {
         badgeColor: 'text-[#38bdf8] bg-[#38bdf8]/15 border-[#38bdf8]/30',
         desc: 'Quiet 2-note Zimmer solitude theme (E4 / F4) with soft pedal bass.'
       };
-    } else if (sec < 75) {
+    } else if (sec < 85) {
       return {
         phase: 2,
         title: 'Phase 2: Clockwork Ostinato',
@@ -139,7 +144,7 @@ export function SonicGardenView() {
         badgeColor: 'text-[#47f3bb] bg-[#47f3bb]/15 border-[#47f3bb]/30',
         desc: 'Steady 4-chord pulsating arpeggio begins ticking over Am → F → C → G.'
       };
-    } else if (sec < 115) {
+    } else if (sec < 130) {
       return {
         phase: 3,
         title: 'Phase 3: Gravitational Tension',
@@ -147,7 +152,7 @@ export function SonicGardenView() {
         badgeColor: 'text-[#f0c04d] bg-[#f0c04d]/20 border-[#f0c04d]/40',
         desc: 'Accelerando tempo, filter sweeps open, sub-bass enters as tension mounts!'
       };
-    } else if (sec < 170) {
+    } else if (sec < 195) {
       return {
         phase: 4,
         title: 'Phase 4: The Monumental Drop',
@@ -168,11 +173,20 @@ export function SonicGardenView() {
 
   // Seek helper
   const seekTo = (sec) => {
-    audioEngine.unlock();
     const clamped = Math.max(0, Math.min(totalDuration, sec));
     setPlaybackTime(clamped);
     playbackTimeRef.current = clamped;
 
+    if (activeItem?.id === 'interstellar' && playMode === 'studio' && audioRef.current) {
+      audioRef.current.currentTime = clamped;
+      if (!isPlaying) {
+        audioRef.current.play().catch(() => {});
+        setIsPlaying(true);
+      }
+      return;
+    }
+
+    audioEngine.unlock();
     if (!activeItem) {
       setActiveItem({
         type: 'track',
@@ -210,9 +224,23 @@ export function SonicGardenView() {
   // Continuous Generative Ambient Audio Loop & Dynamic Interstellar Engine
   useEffect(() => {
     if (!activeItem || !isPlaying) return;
+
+    // In studio mode for Interstellar, use high-fidelity audio element
+    if (activeItem.type === 'track' && activeItem.id === 'interstellar' && playMode === 'studio') {
+      if (audioRef.current) {
+        audioRef.current.currentTime = playbackTimeRef.current;
+        audioRef.current.play().catch((e) => console.log('Audio play error:', e));
+      }
+      return () => {
+        if (audioRef.current) {
+          audioRef.current.pause();
+        }
+      };
+    }
+
     audioEngine.unlock();
 
-    // Hans Zimmer Interstellar 5-Phase Cinematic Dynamic Engine
+    // Hans Zimmer Interstellar 5-Phase Cinematic Dynamic Engine (Bio-Synth mode)
     if (activeItem.type === 'track' && activeItem.id === 'interstellar') {
       audioEngine.setPreset('interstellar');
 
@@ -395,6 +423,7 @@ export function SonicGardenView() {
 
   // Toggle Stream Helper
   const toggleStream = (s) => {
+    if (audioRef.current) audioRef.current.pause();
     audioEngine.unlock();
     if (activeItem?.type === 'stream' && activeItem.id === s.id && isPlaying) {
       setIsPlaying(false);
@@ -406,17 +435,27 @@ export function SonicGardenView() {
 
   // Toggle Track Helper
   const toggleTrack = (t) => {
-    audioEngine.unlock();
     if (activeItem?.type === 'track' && activeItem.id === t.id && isPlaying) {
       setIsPlaying(false);
+      if (audioRef.current) audioRef.current.pause();
     } else {
       setActiveItem({ type: 'track', id: t.id, title: t.title, plant: t.plant });
       setIsPlaying(true);
+      if (t.id === 'interstellar' && playMode === 'studio') {
+        if (audioRef.current) {
+          audioRef.current.currentTime = playbackTimeRef.current;
+          audioRef.current.play().catch(() => {});
+        }
+      } else {
+        if (audioRef.current) audioRef.current.pause();
+        audioEngine.unlock();
+      }
     }
   };
 
   // Toggle Master Broadcast
   const toggleMaster = () => {
+    if (audioRef.current) audioRef.current.pause();
     audioEngine.unlock();
     if (activeItem?.type === 'master' && isPlaying) {
       setIsPlaying(false);
@@ -428,6 +467,28 @@ export function SonicGardenView() {
         plant: 'Calathea Roseopicta'
       });
       setIsPlaying(true);
+    }
+  };
+
+  // Toggle Current Active Item Playback
+  const handleTogglePlay = () => {
+    if (!activeItem) {
+      toggleMaster();
+      return;
+    }
+    if (isPlaying) {
+      setIsPlaying(false);
+      if (audioRef.current) audioRef.current.pause();
+    } else {
+      setIsPlaying(true);
+      if (activeItem.id === 'interstellar' && playMode === 'studio') {
+        if (audioRef.current) {
+          audioRef.current.currentTime = playbackTimeRef.current;
+          audioRef.current.play().catch(() => {});
+        }
+      } else {
+        audioEngine.unlock();
+      }
     }
   };
 
@@ -505,11 +566,35 @@ export function SonicGardenView() {
               : 'bg-[#252b28] border-[#47f3bb]/50 shadow-[0_0_24px_rgba(6,214,160,0.2)]'
             : 'bg-[#1b211e] border-[#3b4a43]/40'
         }`}>
+          {/* HTML5 Audio Tag for High-Fidelity Studio Master Recordings */}
+          <audio
+            ref={audioRef}
+            src="/audio/interstellar.mp3"
+            preload="auto"
+            onLoadedMetadata={(e) => {
+              if (e.target.duration && !isNaN(e.target.duration)) {
+                setAudioDuration(Math.floor(e.target.duration));
+              }
+            }}
+            onTimeUpdate={(e) => {
+              if (activeItem?.id === 'interstellar' && playMode === 'studio') {
+                const cur = Math.floor(e.target.currentTime);
+                setPlaybackTime(cur);
+                playbackTimeRef.current = cur;
+              }
+            }}
+            onEnded={() => {
+              setIsPlaying(false);
+              setPlaybackTime(0);
+              playbackTimeRef.current = 0;
+            }}
+          />
+
           {/* Top Row: Play/Pause button + Track Info + Dynamic Phase Badge */}
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <button
-                onClick={activeItem ? () => setIsPlaying(!isPlaying) : toggleMaster}
+                onClick={handleTogglePlay}
                 className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all cursor-pointer flex-shrink-0 ${
                   isPlaying
                     ? 'bg-[#ba1a1a] text-white shadow-[0_0_15px_rgba(255,180,171,0.5)] active:scale-95'
@@ -558,6 +643,51 @@ export function SonicGardenView() {
               </button>
             </div>
           </div>
+
+          {/* Dual Engine Switcher Pill (Active on Interstellar) */}
+          {activeItem?.id === 'interstellar' && (
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 bg-[#09100c] px-3 py-2 rounded-xl border border-[#3b4a43]/40">
+              <div className="flex items-center gap-1.5">
+                <span className="font-['JetBrains_Mono'] text-[10px] text-[#bacac1] uppercase font-bold">
+                  Audio Engine:
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 w-full sm:w-auto">
+                <button
+                  onClick={() => {
+                    setPlayMode('studio');
+                    if (isPlaying && audioRef.current) {
+                      audioRef.current.currentTime = playbackTimeRef.current;
+                      audioRef.current.play().catch(() => {});
+                    }
+                  }}
+                  className={`flex-1 sm:flex-none px-3 py-1.5 rounded-lg text-xs font-['JetBrains_Mono'] font-extrabold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                    playMode === 'studio'
+                      ? 'bg-gradient-to-r from-[#0284c7] to-[#38bdf8] text-[#082f49] shadow-[0_0_12px_rgba(56,189,248,0.4)]'
+                      : 'bg-[#171d1a] text-[#bacac1] hover:text-white hover:bg-[#252b28]'
+                  }`}
+                  title="Play authentic Hans Zimmer pipe organ studio master recording with real drop and tension"
+                >
+                  <span>🎬</span> Studio Master Audio
+                </button>
+                <button
+                  onClick={() => {
+                    setPlayMode('synth');
+                    if (audioRef.current) audioRef.current.pause();
+                    audioEngine.unlock();
+                  }}
+                  className={`flex-1 sm:flex-none px-3 py-1.5 rounded-lg text-xs font-['JetBrains_Mono'] font-extrabold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                    playMode === 'synth'
+                      ? 'bg-[#47f3bb] text-[#003827] shadow-[0_0_12px_rgba(71,243,187,0.35)]'
+                      : 'bg-[#171d1a] text-[#bacac1] hover:text-white hover:bg-[#252b28]'
+                  }`}
+                  title="Synthesize notes in real-time modulated by live plant bio-potential (432Hz)"
+                >
+                  <span>🌿</span> Bio-Synth 432Hz
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Interactive Timeline Scrubber Slider */}
           <div className="flex items-center gap-3 w-full bg-[#09100c] px-3 py-2 rounded-xl border border-[#3b4a43]/30">
