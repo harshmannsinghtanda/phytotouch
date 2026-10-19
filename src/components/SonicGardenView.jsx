@@ -138,9 +138,9 @@ export function SonicGardenView() {
       ];
 
       let step = 0;
-      // Trigger opening church organ pedal bass & opening harmonic note
-      audioEngine.triggerAttackRelease('A2', '1m', 0.45);
-      audioEngine.triggerAttackRelease('E4', '2n', 0.35);
+      // Trigger opening church organ pedal bass & opening harmonic note with gentle headroom
+      audioEngine.triggerAttackRelease('A2', '2n', 0.24);
+      setTimeout(() => audioEngine.triggerAttackRelease('E4', '2n', 0.20), 100);
 
       const timer = setInterval(() => {
         step++;
@@ -148,21 +148,21 @@ export function SonicGardenView() {
         const noteIdx = step % 8;
         const currentChord = chords[chordIdx];
 
-        // 1. Deep church organ pedal bass on measure start
+        // 1. Deep church organ pedal bass on measure start (gentle velocity to avoid bass clipping)
         if (noteIdx === 0) {
-          audioEngine.triggerAttackRelease(currentChord.bass, '1m', 0.42);
+          audioEngine.triggerAttackRelease(currentChord.bass, '2n', 0.22);
         }
 
-        // 2. High ethereal soaring climax note floating across the organ
+        // 2. High ethereal soaring climax note floating across the organ (offset by 140ms to avoid transient collision)
         if (noteIdx === 0 && step >= 16) {
           setTimeout(() => {
-            audioEngine.triggerAttackRelease(currentChord.soaringLead, '2n', 0.32);
-          }, 120);
+            audioEngine.triggerAttackRelease(currentChord.soaringLead, '2n', 0.18);
+          }, 140);
         }
 
-        // 3. Iconic pulsating clockwork arpeggio ostinato
+        // 3. Iconic pulsating clockwork arpeggio ostinato with silky clean velocity
         const note = currentChord.arpeggio[noteIdx];
-        const vel = 0.28 + (noteIdx % 2 === 0 ? 0.08 : 0);
+        const vel = 0.18 + (noteIdx % 2 === 0 ? 0.04 : 0);
         audioEngine.triggerAttackRelease(note, '4n', vel);
       }, 440);
 
@@ -198,8 +198,8 @@ export function SonicGardenView() {
     let step = 0;
     let lastIdx = 0;
 
-    // Trigger opening tone immediately
-    audioEngine.triggerAttackRelease(notes[0], '4n', 0.42);
+    // Trigger opening tone immediately with gentle velocity
+    audioEngine.triggerAttackRelease(notes[0], '4n', 0.25);
 
     const timer = setInterval(() => {
       step++;
@@ -215,15 +215,15 @@ export function SonicGardenView() {
       const isChordStep = step % 6 === 0;
 
       if (isChordStep && notes.length >= 3) {
-        // Resonant acoustic chord wash
+        // Resonant acoustic chord wash with safe velocities
         const c1 = notes[0];
         const c2 = notes[2 % notes.length];
         const c3 = notes[4 % notes.length];
-        audioEngine.triggerAttackRelease(c1, '2n', 0.28);
-        setTimeout(() => audioEngine.triggerAttackRelease(c2, '2n', 0.24), 60);
-        setTimeout(() => audioEngine.triggerAttackRelease(c3, '2n', 0.24), 120);
+        audioEngine.triggerAttackRelease(c1, '2n', 0.20);
+        setTimeout(() => audioEngine.triggerAttackRelease(c2, '2n', 0.16), 80);
+        setTimeout(() => audioEngine.triggerAttackRelease(c3, '2n', 0.14), 160);
       } else {
-        const velocity = 0.26 + Math.random() * 0.18;
+        const velocity = 0.18 + Math.random() * 0.08;
         const dur = (preset === 'celestial_pad' || preset === 'cello' || preset === 'interstellar') ? '2n' : '4n';
         audioEngine.triggerAttackRelease(note, dur, velocity);
       }

@@ -149,13 +149,13 @@ class PlantAudioEngine {
       // 1. Master Output Destination via Calibrated Volume Bus (-8 dB default)
       this.masterVolume = new Tone.Volume(this.volume).toDestination();
 
-      // 2. Transparent Soft-Knee Bus Compressor
+      // 2. Transparent Soft-Knee Bus Compressor (Gentle transparent leveling without pumping)
       this.masterCompressor = new Tone.Compressor({
-        threshold: -8,
-        ratio: 2.0,
-        attack: 0.05,
-        release: 0.35,
-        knee: 14
+        threshold: -14,
+        ratio: 1.8,
+        attack: 0.08,
+        release: 0.45,
+        knee: 20
       }).connect(this.masterVolume);
 
       // 3. Clean Sub-Bass High-Pass Filter at 60 Hz
@@ -173,23 +173,23 @@ class PlantAudioEngine {
         Q: 0.7
       }).connect(this.highpassFilter);
 
-      // 5. Clean Master Mix Bus
-      this.masterBus = new Tone.Gain(0.85).connect(this.warmthFilter);
+      // 5. Clean Master Mix Bus (Calibrated headroom to prevent any digital clipping)
+      this.masterBus = new Tone.Gain(0.70).connect(this.warmthFilter);
 
       // 6. Natural Acoustic Room Reverb & Delay
-      this.synthBus = new Tone.Gain(0.72).connect(this.masterBus);
+      this.synthBus = new Tone.Gain(0.70).connect(this.masterBus);
 
       this.delayReturn = new Tone.Gain(this.delayWet).connect(this.masterBus);
       this.delay = new Tone.PingPongDelay({
-        delayTime: '8n.',
-        feedback: 0.12,
+        delayTime: 0.36,
+        feedback: 0.14,
         wet: 1.0
       }).connect(this.delayReturn);
 
       this.reverbReturn = new Tone.Gain(this.reverbWet).connect(this.masterBus);
       this.reverb = new Tone.Freeverb({
-        roomSize: 0.45,
-        dampening: 4200,
+        roomSize: 0.65,
+        dampening: 3500,
         wet: 1.0
       }).connect(this.reverbReturn);
 
@@ -289,16 +289,16 @@ class PlantAudioEngine {
 
       // Preset 5: Ethereal Interstellar Celestial Organ & Shimmer Chimes
       this.interstellarSynth = new Tone.PolySynth(Tone.Synth, {
-        maxPolyphony: 12,
+        maxPolyphony: 16,
         oscillator: { type: 'triangle' },
-        envelope: { attack: 0.12, decay: 3.2, sustain: 0.65, release: 3.2 }
+        envelope: { attack: 0.08, decay: 1.6, sustain: 0.35, release: 1.4 }
       });
-      this.interstellarSynth.volume.value = -6;
+      this.interstellarSynth.volume.value = -8;
       this.interstellarSynth.set({ detune: -31.77 });
-      this.interstellarFilter = new Tone.Filter(3200, 'lowpass').connect(this.synthBus);
+      this.interstellarFilter = new Tone.Filter(2800, 'lowpass').connect(this.synthBus);
       this.interstellarSynth.connect(this.interstellarFilter);
-      this.interstellarSynth.connect(this.reverb);
-      this.interstellarSynth.connect(this.delay);
+      this.interstellarFilter.connect(this.reverb);
+      this.interstellarFilter.connect(this.delay);
 
       this.isInitialized = true;
     } catch (e) {
