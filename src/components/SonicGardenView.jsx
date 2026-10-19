@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Play, Pause, Radio, Volume2, Globe, Heart, Download, Share2, Sparkles, Activity, Music } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Play, Pause, Radio, Volume2, Globe, Heart, Download, Share2, Sparkles, Activity, Music, Waves, VolumeX } from 'lucide-react';
 import { audioEngine } from '../audio/PlantAudioEngine';
 
 export function SonicGardenView() {
-  const [playingStream, setPlayingStream] = useState(null);
-  const [masterPlaying, setMasterPlaying] = useState(false);
+  // Global active audio source state: null or { type: 'stream' | 'track' | 'master', id: string | number, title: string, plant: string }
+  const [activeItem, setActiveItem] = useState(null);
 
   const streams = [
     {
@@ -15,7 +15,9 @@ export function SonicGardenView() {
       voltage: '0.62 mV',
       listeners: '342 tuned in',
       desc: 'Bonsai tree biopotentials generating meditative, cyclic Lydian bells and harmonic brass.',
-      notes: ['C4', 'E4', 'G4', 'B4']
+      preset: 'bansuri_flute',
+      notes: ['C4', 'D4', 'E4', 'F#4', 'G4', 'A4', 'B4', 'C5'],
+      intervalMs: 850
     },
     {
       id: 'amazon',
@@ -25,7 +27,9 @@ export function SonicGardenView() {
       voltage: '1.48 mV',
       listeners: '189 tuned in',
       desc: 'High-humidity sap flow triggering delicate crystalline kalimba patterns and raindrop harmonics.',
-      notes: ['F4', 'A4', 'C5', 'E5']
+      preset: 'kalimba',
+      notes: ['F4', 'A4', 'C5', 'D5', 'E5', 'G5', 'A5'],
+      intervalMs: 600
     },
     {
       id: 'sequoia',
@@ -35,39 +39,158 @@ export function SonicGardenView() {
       voltage: '4.12 mV',
       listeners: '512 tuned in',
       desc: 'Massive old-growth xylem fluid dynamics driving warm sub-bass acoustic cello reverberations.',
-      notes: ['A2', 'C3', 'E3', 'A3']
+      preset: 'cello',
+      notes: ['A2', 'C3', 'E3', 'A3', 'C4', 'E4', 'G4'],
+      intervalMs: 1200
     }
   ];
 
   const tracks = [
-    { id: 1, title: 'Perforated Veins in Berlin', plant: 'Monstera Deliciosa', duration: '18:24', scale: 'Lydian 432 Hz', author: 'Dr. Elena Voss' },
-    { id: 2, title: 'Alpine Lichen Sleep Cycle', plant: 'Xanthoria Elegans', duration: '34:10', scale: 'Hirajoshi Minor', author: 'Julian Thorne' },
-    { id: 3, title: 'Action Potentials: Flytrap', plant: 'Dionaea Muscipula', duration: '08:45', scale: 'Rapid Pentatonic', author: 'BioSound Lab' },
-    { id: 4, title: 'Redwood Sapling at Dawn', plant: 'Sequoia Gigantea', duration: '22:15', scale: 'Earth 432 Hz Saptak', author: 'Nirman Bio-Acoustics' }
+    {
+      id: 1,
+      title: 'Perforated Veins in Berlin',
+      plant: 'Monstera Deliciosa',
+      duration: '18:24',
+      scale: 'Lydian 432 Hz',
+      author: 'Dr. Elena Voss',
+      preset: 'grand_piano',
+      notes: ['C4', 'E4', 'F#4', 'G4', 'B4', 'C5', 'E5'],
+      intervalMs: 750
+    },
+    {
+      id: 2,
+      title: 'Alpine Lichen Sleep Cycle',
+      plant: 'Xanthoria Elegans',
+      duration: '34:10',
+      scale: 'Hirajoshi Minor',
+      author: 'Julian Thorne',
+      preset: 'celestial_pad',
+      notes: ['C4', 'Db4', 'F4', 'Gb4', 'Bb4', 'C5'],
+      intervalMs: 1100
+    },
+    {
+      id: 3,
+      title: 'Action Potentials: Flytrap',
+      plant: 'Dionaea Muscipula',
+      duration: '08:45',
+      scale: 'Rapid Pentatonic',
+      author: 'BioSound Lab',
+      preset: 'kalimba',
+      notes: ['G4', 'A4', 'C5', 'D5', 'E5', 'G5', 'A5'],
+      intervalMs: 500
+    },
+    {
+      id: 4,
+      title: 'Redwood Sapling at Dawn',
+      plant: 'Sequoia Gigantea',
+      duration: '22:15',
+      scale: 'Earth 432 Hz Saptak',
+      author: 'Nirman Bio-Acoustics',
+      preset: 'cello',
+      notes: ['A2', 'C3', 'E3', 'A3', 'C4', 'E4'],
+      intervalMs: 1000
+    }
   ];
 
-  const toggleStream = (stream) => {
+  // Continuous Generative Ambient Audio Loop
+  useEffect(() => {
+    if (!activeItem) return;
     audioEngine.unlock();
-    if (playingStream === stream.id) {
-      setPlayingStream(null);
+
+    let notes = ['C4', 'E4', 'G4', 'B4'];
+    let preset = 'grand_piano';
+    let intervalMs = 800;
+
+    if (activeItem.type === 'stream') {
+      const s = streams.find((item) => item.id === activeItem.id);
+      if (s) {
+        notes = s.notes;
+        preset = s.preset;
+        intervalMs = s.intervalMs;
+      }
+    } else if (activeItem.type === 'track') {
+      const t = tracks.find((item) => item.id === activeItem.id);
+      if (t) {
+        notes = t.notes;
+        preset = t.preset;
+        intervalMs = t.intervalMs;
+      }
+    } else if (activeItem.type === 'master') {
+      notes = ['C4', 'D4', 'E4', 'G4', 'A4', 'C5', 'E5'];
+      preset = 'celestial_pad';
+      intervalMs = 900;
+    }
+
+    audioEngine.setPreset(preset);
+
+    let step = 0;
+    let lastIdx = 0;
+
+    // Trigger opening tone immediately
+    audioEngine.triggerAttackRelease(notes[0], '4n', 0.42);
+
+    const timer = setInterval(() => {
+      step++;
+      // Organic generative walk across scale notes
+      const dir = Math.random() > 0.48 ? 1 : -1;
+      let nextIdx = Math.max(0, Math.min(notes.length - 1, lastIdx + dir));
+      if (nextIdx === lastIdx) {
+        nextIdx = Math.floor(Math.random() * notes.length);
+      }
+      lastIdx = nextIdx;
+
+      const note = notes[nextIdx];
+      const isChordStep = step % 6 === 0;
+
+      if (isChordStep && notes.length >= 3) {
+        // Resonant acoustic chord wash
+        const c1 = notes[0];
+        const c2 = notes[2 % notes.length];
+        const c3 = notes[4 % notes.length];
+        audioEngine.triggerAttackRelease(c1, '2n', 0.28);
+        setTimeout(() => audioEngine.triggerAttackRelease(c2, '2n', 0.24), 60);
+        setTimeout(() => audioEngine.triggerAttackRelease(c3, '2n', 0.24), 120);
+      } else {
+        const velocity = 0.26 + Math.random() * 0.18;
+        const dur = (preset === 'celestial_pad' || preset === 'cello') ? '2n' : '4n';
+        audioEngine.triggerAttackRelease(note, dur, velocity);
+      }
+    }, intervalMs);
+
+    return () => clearInterval(timer);
+  }, [activeItem]);
+
+  // Toggle Stream Helper
+  const toggleStream = (s) => {
+    audioEngine.unlock();
+    if (activeItem?.type === 'stream' && activeItem.id === s.id) {
+      setActiveItem(null);
     } else {
-      setPlayingStream(stream.id);
-      // Play a generative motif
-      stream.notes.forEach((note, idx) => {
-        setTimeout(() => {
-          audioEngine.triggerAttackRelease(note, '4n');
-        }, idx * 250);
-      });
+      setActiveItem({ type: 'stream', id: s.id, title: s.title, plant: s.location });
     }
   };
 
+  // Toggle Track Helper
+  const toggleTrack = (t) => {
+    audioEngine.unlock();
+    if (activeItem?.type === 'track' && activeItem.id === t.id) {
+      setActiveItem(null);
+    } else {
+      setActiveItem({ type: 'track', id: t.id, title: t.title, plant: t.plant });
+    }
+  };
+
+  // Toggle Master Broadcast
   const toggleMaster = () => {
     audioEngine.unlock();
-    const next = !masterPlaying;
-    setMasterPlaying(next);
-    if (next) {
-      ['C4', 'E4', 'G4', 'C5'].forEach((note, idx) => {
-        setTimeout(() => audioEngine.triggerAttackRelease(note, '2n'), idx * 300);
+    if (activeItem?.type === 'master') {
+      setActiveItem(null);
+    } else {
+      setActiveItem({
+        type: 'master',
+        id: 'master-01',
+        title: 'Root Systems & Cloud Canopy',
+        plant: 'Calathea Roseopicta'
       });
     }
   };
@@ -100,7 +223,7 @@ export function SonicGardenView() {
                 </span>
                 <span className="text-[#3b4a43]">•</span>
                 <span className="inline-flex items-center gap-2 font-['JetBrains_Mono'] text-xs text-[#dde4de]">
-                  <span className="text-[#47f3bb] font-bold">● LIVE:</span> Reykjavik Geothermal Fern Complex (Sub-Bass)
+                  <span className="text-[#47f3bb] font-bold">● LIVE:</span> California Old-Growth Redwood Relay (Sub-Bass Cello)
                   <span className="ml-1 px-1.5 py-0.5 bg-[#252b28] rounded text-[#47f3bb] text-[10px]">512 listening</span>
                 </span>
               </div>
@@ -128,42 +251,50 @@ export function SonicGardenView() {
               Botanical Audio Commons
             </span>
             <span className="text-[#3b4a43] font-['JetBrains_Mono'] text-xs">/</span>
-            <span className="font-['JetBrains_Mono'] text-xs text-[#bacac1]">Archive &amp; Synchronous Relays</span>
+            <span className="font-['JetBrains_Mono'] text-xs text-[#bacac1]">Archive &amp; Continuous Ambient Streams</span>
           </div>
           <h1 className="font-['Syne'] text-4xl sm:text-5xl font-extrabold text-[#dde4de] tracking-tight leading-none">
             The Sonic Garden
           </h1>
           <p className="font-['Inter'] text-sm sm:text-base text-[#bacac1] max-w-2xl mt-1 leading-relaxed">
-            A collective repository of micro-volt electrical rhythms recorded directly from the living tissues of flora across the world. Transduced into pure MIDI, generative ambient modules, and continuous live broadcasts.
+            A collective repository of micro-volt electrical rhythms recorded directly from living flora across the world. Click any broadcast or recording below to stream continuous, non-stop ambient botanical soundscapes.
           </p>
         </div>
 
-        {/* Quick Audio Player Pill / Master Seed */}
-        <div className="flex items-center gap-4 p-4 rounded-2xl bg-[#1b211e] border border-[#47f3bb]/20 shadow-xl">
+        {/* Global Floating Master Seed Player Card */}
+        <div className={`flex items-center gap-4 p-4 rounded-2xl border transition-all shadow-xl ${
+          activeItem
+            ? 'bg-[#252b28] border-[#47f3bb]/50 shadow-[0_0_24px_rgba(6,214,160,0.2)]'
+            : 'bg-[#1b211e] border-[#3b4a43]/40'
+        }`}>
           <button
-            onClick={toggleMaster}
-            className="w-12 h-12 rounded-xl bg-[#06d6a0] hover:bg-[#47f3bb] text-[#003827] flex items-center justify-center transition-transform hover:scale-105 active:scale-95 shadow-[0_0_15px_rgba(6,214,160,0.4)] cursor-pointer flex-shrink-0"
+            onClick={activeItem ? () => setActiveItem(null) : toggleMaster}
+            className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all cursor-pointer flex-shrink-0 ${
+              activeItem
+                ? 'bg-[#ba1a1a] text-white shadow-[0_0_15px_rgba(255,180,171,0.5)]'
+                : 'bg-[#06d6a0] hover:bg-[#47f3bb] text-[#003827] shadow-[0_0_15px_rgba(6,214,160,0.4)] hover:scale-105 active:scale-95'
+            }`}
           >
-            {masterPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current ml-0.5" />}
+            {activeItem ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current ml-0.5" />}
           </button>
           <div className="flex flex-col">
             <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#47f3bb] animate-pulse"></span>
-              <span className="font-['JetBrains_Mono'] text-[9px] text-[#47f3bb] font-bold uppercase tracking-wider">
-                Master Broadcast
+              <span className={`w-2 h-2 rounded-full ${activeItem ? 'bg-[#47f3bb] animate-ping' : 'bg-[#bacac1]'}`}></span>
+              <span className={`font-['JetBrains_Mono'] text-[9px] font-bold uppercase tracking-wider ${activeItem ? 'text-[#47f3bb]' : 'text-[#bacac1]'}`}>
+                {activeItem ? 'LIVE STREAMING AUDIO' : 'STANDBY • CLICK TO PLAY'}
               </span>
             </div>
             <span className="font-['Syne'] text-sm sm:text-base font-bold text-[#dde4de]">
-              Root Systems &amp; Cloud Canopy
+              {activeItem ? activeItem.title : 'Root Systems & Cloud Canopy'}
             </span>
-            <span className="font-['JetBrains_Mono'] text-[10px] text-[#bacac1]">
-              Calathea Roseopicta • 432 Hz Resonant Matrix
+            <span className="font-['JetBrains_Mono'] text-[10px] text-[#f0c04d]">
+              {activeItem ? `Active Source: ${activeItem.plant}` : 'Calathea Roseopicta • 432 Hz Resonant Matrix'}
             </span>
           </div>
         </div>
       </section>
 
-      {/* Global Live Broadcast Hub (3 Stream Cards) */}
+      {/* Global Live Broadcast Hub (3 Continuous Stream Cards) */}
       <section className="w-full px-4 md:px-8 py-6 flex flex-col gap-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-2">
           <div className="flex flex-col">
@@ -185,11 +316,15 @@ export function SonicGardenView() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {streams.map((s) => {
-            const isPlaying = playingStream === s.id;
+            const isPlaying = activeItem?.type === 'stream' && activeItem.id === s.id;
             return (
               <div
                 key={s.id}
-                className="bg-[#171d1a] border border-[#3b4a43]/40 rounded-2xl overflow-hidden shadow-xl hover:border-[#47f3bb]/40 transition-all flex flex-col justify-between"
+                className={`border rounded-2xl overflow-hidden shadow-xl transition-all flex flex-col justify-between ${
+                  isPlaying
+                    ? 'bg-[#252b28] border-[#47f3bb] shadow-[0_0_24px_rgba(71,243,187,0.25)]'
+                    : 'bg-[#171d1a] border-[#3b4a43]/40 hover:border-[#47f3bb]/40'
+                }`}
               >
                 <div className="p-5 flex flex-col gap-3">
                   <div className="flex items-center justify-between">
@@ -218,7 +353,7 @@ export function SonicGardenView() {
                   <div className="flex items-center gap-2">
                     <span className={`w-2 h-2 rounded-full ${isPlaying ? 'bg-[#47f3bb] animate-ping' : 'bg-[#3b4a43]'}`}></span>
                     <span className="font-['JetBrains_Mono'] text-xs text-[#dde4de]">
-                      {isPlaying ? 'STREAMING 432 Hz' : 'STANDBY'}
+                      {isPlaying ? 'STREAMING CONTINUOUSLY' : 'STANDBY'}
                     </span>
                   </div>
                   <button
@@ -230,7 +365,7 @@ export function SonicGardenView() {
                     }`}
                   >
                     {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current" />}
-                    <span>{isPlaying ? 'Stop Feed' : 'Listen Live'}</span>
+                    <span>{isPlaying ? 'Pause Feed' : 'Listen Live'}</span>
                   </button>
                 </div>
               </div>
@@ -239,7 +374,7 @@ export function SonicGardenView() {
         </div>
       </section>
 
-      {/* Curated Botanical Releases Table */}
+      {/* Curated Botanical Releases Table with Full Continuous Audio Player */}
       <section className="w-full px-4 md:px-8 py-10 flex flex-col gap-6">
         <div className="flex flex-col gap-1">
           <span className="font-['JetBrains_Mono'] text-xs text-[#f0c04d] uppercase tracking-widest font-semibold">
@@ -248,6 +383,9 @@ export function SonicGardenView() {
           <h2 className="font-['Syne'] text-2xl sm:text-3xl font-bold text-[#dde4de]">
             Curated Botanical Soundscapes
           </h2>
+          <span className="font-['Inter'] text-xs text-[#bacac1]">
+            Click Play on any track to start non-stop generative playback calibrated to the plant species.
+          </span>
         </div>
 
         <div className="overflow-x-auto bg-[#171d1a] border border-[#3b4a43]/40 rounded-2xl">
@@ -259,33 +397,48 @@ export function SonicGardenView() {
                 <th className="py-3.5 px-4">SCALE MATRIX</th>
                 <th className="py-3.5 px-4">DURATION</th>
                 <th className="py-3.5 px-4">RESEARCHER</th>
-                <th className="py-3.5 px-4 text-right">LISTEN</th>
+                <th className="py-3.5 px-4 text-right">CONTINUOUS AUDIO</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#3b4a43]/20">
-              {tracks.map((t) => (
-                <tr key={t.id} className="hover:bg-[#1b211e]/70 transition-colors">
-                  <td className="py-3.5 px-4 font-bold text-[#dde4de] flex items-center gap-2">
-                    <Music className="w-4 h-4 text-[#47f3bb]" />
-                    <span>{t.title}</span>
-                  </td>
-                  <td className="py-3.5 px-4 text-[#47f3bb]">{t.plant}</td>
-                  <td className="py-3.5 px-4 text-[#ffdf9d]">{t.scale}</td>
-                  <td className="py-3.5 px-4 text-[#bacac1]">{t.duration}</td>
-                  <td className="py-3.5 px-4 text-[#dde4de]">{t.author}</td>
-                  <td className="py-3.5 px-4 text-right">
-                    <button
-                      onClick={() => {
-                        audioEngine.unlock();
-                        audioEngine.triggerAttackRelease('D4', '4n');
-                      }}
-                      className="px-3 py-1 bg-[#1b211e] hover:bg-[#47f3bb] hover:text-[#003827] text-[#47f3bb] border border-[#47f3bb]/30 rounded-lg text-[10px] font-bold transition-all cursor-pointer"
-                    >
-                      PLAY
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {tracks.map((t) => {
+                const isPlaying = activeItem?.type === 'track' && activeItem.id === t.id;
+                return (
+                  <tr
+                    key={t.id}
+                    className={`transition-colors ${
+                      isPlaying ? 'bg-[#252b28]/80' : 'hover:bg-[#1b211e]/70'
+                    }`}
+                  >
+                    <td className="py-3.5 px-4 font-bold text-[#dde4de] flex items-center gap-2">
+                      <Music className={`w-4 h-4 ${isPlaying ? 'text-[#47f3bb] animate-bounce' : 'text-[#bacac1]'}`} />
+                      <span>{t.title}</span>
+                      {isPlaying && (
+                        <span className="ml-1 px-1.5 py-0.5 rounded bg-[#47f3bb]/20 text-[#47f3bb] text-[9px] font-bold">
+                          PLAYING NOW
+                        </span>
+                      )}
+                    </td>
+                    <td className="py-3.5 px-4 text-[#47f3bb]">{t.plant}</td>
+                    <td className="py-3.5 px-4 text-[#ffdf9d]">{t.scale}</td>
+                    <td className="py-3.5 px-4 text-[#bacac1]">{t.duration}</td>
+                    <td className="py-3.5 px-4 text-[#dde4de]">{t.author}</td>
+                    <td className="py-3.5 px-4 text-right">
+                      <button
+                        onClick={() => toggleTrack(t)}
+                        className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ml-auto ${
+                          isPlaying
+                            ? 'bg-[#ba1a1a] text-white shadow-[0_0_12px_rgba(255,180,171,0.4)]'
+                            : 'bg-[#1b211e] hover:bg-[#47f3bb] hover:text-[#003827] text-[#47f3bb] border border-[#47f3bb]/30'
+                        }`}
+                      >
+                        {isPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3 fill-current" />}
+                        <span>{isPlaying ? 'PAUSE' : 'PLAY'}</span>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -293,3 +446,5 @@ export function SonicGardenView() {
     </div>
   );
 }
+
+export default SonicGardenView;
