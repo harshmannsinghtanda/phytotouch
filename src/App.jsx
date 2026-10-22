@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { ExperienceView } from './components/ExperienceView';
 import { PlantSynthView } from './components/PlantSynthView';
 import { HardwareKitsView } from './components/HardwareKitsView';
+import { HardwareRigSimulator } from './components/HardwareRigSimulator';
 import { SonicGardenView } from './components/SonicGardenView';
 import { SerialConnectModal } from './components/SerialConnectModal';
 import { FirmwareModal } from './components/FirmwareModal';
@@ -87,9 +88,18 @@ export function App() {
             />
           )}
 
+          {activeTab === 'hardware-rig' && (
+            <section className="w-full max-w-7xl mx-auto px-4 md:px-8 py-8 flex-1">
+              <HardwareRigSimulator
+                onOpenFirmwareModal={() => setIsFirmwareOpen(true)}
+              />
+            </section>
+          )}
+
           {activeTab === 'hardware-and-kits' && (
             <HardwareKitsView
               onOpenFirmware={() => setIsFirmwareOpen(true)}
+              onSimulateRig={() => setActiveTab('hardware-rig')}
             />
           )}
 

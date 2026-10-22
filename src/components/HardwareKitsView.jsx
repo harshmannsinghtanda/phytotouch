@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Cpu, Usb, Zap, ShoppingBag, Download, Copy, Check, Terminal, Layers, ShieldCheck, Activity } from 'lucide-react';
+import { HardwareRigSimulator } from './HardwareRigSimulator';
 
-export function HardwareKitsView({ onOpenFirmware }) {
+export function HardwareKitsView({ onOpenFirmware, onSimulateRig }) {
   const [copiedCode, setCopiedCode] = useState(false);
 
   const arduinoSnippet = `/* PhytoTouch Bio-Telemetry Core Firmware v2.4
@@ -227,6 +228,24 @@ void loop() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Live Interactive Hardware Rig Simulator & Circuit Schematic */}
+      <section className="w-full bg-[#070d0a] py-14 px-4 md:px-8 border-t border-[#3b4a43]/30">
+        <div className="max-w-7xl mx-auto flex flex-col gap-6">
+          <div className="flex flex-col gap-1">
+            <span className="font-['JetBrains_Mono'] text-xs text-[#47f3bb] uppercase tracking-widest font-semibold">
+              Live Hardware Simulation &amp; EE Schematics
+            </span>
+            <h2 className="font-['Syne'] text-3xl font-bold text-[#dde4de]">
+              Interactive Hardware Rig &amp; Circuit Simulator
+            </h2>
+            <p className="font-['Inter'] text-xs sm:text-sm text-[#bacac1]">
+              Simulate the physical ESP32 DevKit V1 board, breadboard DuPont harness, 316L soil ground probe, and botanical foliar touch zones with real-time audio and circuit schematics.
+            </p>
+          </div>
+          <HardwareRigSimulator onOpenFirmwareModal={onOpenFirmware} />
         </div>
       </section>
 

@@ -14,6 +14,7 @@ export function Header({
   const navItems = [
     { id: 'experience', label: 'Experience' },
     { id: 'plant-synth', label: 'Plant Synth' },
+    { id: 'hardware-rig', label: 'Rig Simulator' },
     { id: 'hardware-and-kits', label: 'Hardware & Kits' },
     { id: 'sonic-garden', label: 'Sonic Garden' }
   ];
