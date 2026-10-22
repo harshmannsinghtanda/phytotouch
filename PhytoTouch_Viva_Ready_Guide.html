@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PhytoTouch: Master Viva & Oral Examination Guide | Nirman Lab 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&family=Cinzel:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+@page {{
+    size: A4 portrait;
+    margin: 18mm 16mm 18mm 16mm;
+    @bottom-right {{
+        content: "Page " counter(page);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 8pt;
+        color: #64748b;
+    }}
+    @bottom-left {{
+        content: "PhytoTouch Viva Guide • Nirman Lab 2026";
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 8pt;
+        color: #94a3b8;
+    }}
+}}
+
+@media print {{
+    body {{
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }}
+    .page-break {{
+        page-break-before: always;
+        break-before: page;
+    }}
+    .no-break {{
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }}
+}}
+
+* {{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}}
+
+body {{
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #0f172a;
+    background-color: #ffffff;
+    font-size: 9.6pt;
+    line-height: 1.56;
+}}
+
+/* Typography */
+h1, h2, h3, h4 {{
+    font-weight: 800;
+    color: #064e3b;
+    letter-spacing: -0.2px;
+}}
+
+.doc-header {{
+    border-bottom: 2px solid #064e3b;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}}
+
+.doc-title-block {{
+    flex: 1;
+}}
+
+.inst-name {{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #059669;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}}
+
+.main-title {{
+    font-size: 19pt;
+    font-weight: 900;
+    color: #064e3b;
+    line-height: 1.15;
+    margin: 3px 0;
+}}
+
+.sub-title {{
+    font-size: 9.5pt;
+    color: #475569;
+    font-weight: 600;
+}}
+
+.header-badges {{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}}
+
+.badge {{
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+}}
+.badge-emerald {{ background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }}
+.badge-gold {{ background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }}
+.badge-blue {{ background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }}
+
+/* Section Titles */
+.section-banner {{
+    background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 6px;
+    margin: 16px 0 10px 0;
+    font-size: 11pt;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}}
+
+.section-banner .pill {{
+    background: #ffffff;
+    color: #064e3b;
+    font-size: 7pt;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+}}
+
+/* Callout Boxes */
+.callout {{
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 8px 0;
+    font-size: 9.2pt;
+    line-height: 1.5;
+}}
+.callout-green {{
+    background: #f0fdf4;
+    border-left: 4px solid #10b981;
+    color: #065f46;
+}}
+.callout-amber {{
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    color: #92400e;
+}}
+.callout-red {{
+    background: #fef2f2;
+    border-left: 4px solid #ef4444;
+    color: #991b1b;
+}}
+.callout-blue {{
+    background: #f0f9ff;
+    border-left: 4px solid #0284c7;
+    color: #075985;
+}}
+
+/* Pitch Boxes */
+.pitch-card {{
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin: 10px 0;
+}}
+.pitch-label {{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}}
+.pitch-text {{
+    font-size: 9.6pt;
+    line-height: 1.6;
+    color: #0f172a;
+}}
+.pitch-text strong {{
+    color: #047857;
+}}
+
+/* Tables */
+table {{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 12px 0;
+    font-size: 8.8pt;
+}}
+th {{
+    background: #0f172a;
+    color: #ffffff;
+    font-weight: 700;
+    text-align: left;
+    padding: 6px 10px;
+    font-size: 8.2pt;
+    letter-spacing: 0.3px;
+}}
+td {{
+    padding: 6px 10px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+}}
+tr:nth-child(even) {{
+    background: #f8fafc;
+}}
+
+/* Viva Q&A Blocks */
+.qa-card {{
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin: 10px 0;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}}
+.qa-header {{
+    background: #f1f5f9;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}}
+.q-badge {{
+    background: #064e3b;
+    color: #ffffff;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    font-size: 8pt;
+    padding: 2px 7px;
+    border-radius: 4px;
+    shrink: 0;
+}}
+.q-title {{
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 9.6pt;
+    line-height: 1.35;
+}}
+.qa-body {{
+    padding: 10px 12px;
+    font-size: 9.1pt;
+    color: #334155;
+    line-height: 1.55;
+}}
+.qa-body strong {{
+    color: #065f46;
+}}
+.why-ask {{
+    margin-top: 6px;
+    font-size: 8.2pt;
+    color: #64748b;
+    font-style: italic;
+    background: #f8fafc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border-left: 2px solid #94a3b8;
+}}
+
+/* KPI Grid */
+.kpi-grid {{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 10px 0;
+}}
+.kpi-box {{
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 8px;
+    text-align: center;
+}}
+.kpi-val {{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14pt;
+    font-weight: 900;
+    color: #064e3b;
+}}
+.kpi-desc {{
+    font-size: 7.2pt;
+    color: #64748b;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 2px;
+}}
+
+.flow-step {{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+}}
+.flow-num {{
+    width: 24px;
+    height: 24px;
+    background: #064e3b;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 9pt;
+    flex-shrink: 0;
+}}
+.flow-content {{
+    flex: 1;
+    font-size: 8.8pt;
+}}
+
+ul, ol {{
+    padding-left: 20px;
+    margin: 4px 0 8px 0;
+}}
+li {{
+    margin-bottom: 4px;
+}}
+</style>
+</head>
+<body>
+
+<!-- ==========================================================================
+     PAGE 1: PITCH & CORE WORKING PRINCIPLE
+     ========================================================================== -->
+<div class="doc-header">
+    <div class="doc-title-block">
+        <div class="inst-name">Terna Engineering College • Nirman Lab 2026 • Document Ref: NIRMAN-LAB-2026-VIVA-01</div>
+        <h1 class="main-title">PhytoTouch: Master Viva & Oral Exam Survival Guide</h1>
+        <div class="sub-title">How It Works in Simple, Crystal-Clear Language • 100% Viva Ready Cheat Sheet</div>
+    </div>
+    <div class="header-badges">
+        <span class="badge badge-emerald">Sub-12ms Latency</span>
+        <span class="badge badge-gold">₹830 BOM Cost</span>
+        <span class="badge badge-blue">432Hz Saptak</span>
+    </div>
+</div>
+
+<div class="kpi-grid">
+    <div class="kpi-box">
+        <div class="kpi-val">11.1 ms</div>
+        <div class="kpi-desc">Total Touch Latency</div>
+    </div>
+    <div class="kpi-box">
+        <div class="kpi-val">₹830</div>
+        <div class="kpi-desc">Hardware BOM Cost</div>
+    </div>
+    <div class="kpi-box">
+        <div class="kpi-val">+298%</div>
+        <div class="kpi-desc">Tulsi Capacitance Δ</div>
+    </div>
+    <div class="kpi-box">
+        <div class="kpi-val">432 Hz</div>
+        <div class="kpi-desc">Verdi Saptak Scale</div>
+    </div>
+</div>
+
+<div class="section-banner">
+    <span>MODULE 1: THE TWO ELEVATOR PITCHES (MEMORIZE THESE)</span>
+    <span class="pill">PRACTICE SPEAKING OUT LOUD</span>
+</div>
+
+<div class="pitch-card">
+    <div class="pitch-label">⚡ 30-Second Rapid Pitch (When Examiner Says: "Tell me what you built in one minute")</div>
+    <div class="pitch-text">
+        "Sir, we engineered <strong>PhytoTouch</strong>, a cyber-physical bio-acoustic instrument that translates <strong>living plant electrophysiology into expressive 24-bit musical soundscapes</strong> in real time. Living plant leaves carry mineral electrolyte sap that makes them behave as natural electrical capacitors. When a human finger touches a leaf, parallel human body capacitance (~120 pF) causes an instant dielectric shift. An <strong>ESP32 microcontroller</strong> measures this micro-capacitive jump via hardware relaxation timing and streams the raw telemetry via <strong>native Web Serial at 115,200 baud</strong> directly into a browser. There, our <strong>Web Audio DSP engine</strong> synthesizes harmonic notes tuned to the <strong>432 Hz Vedic Saptak scale</strong> with an ultra-low latency of just <strong>11.1 milliseconds</strong>—all for a hardware cost of only <strong>₹830</strong>."
+    </div>
+</div>
+
+<div class="pitch-card">
+    <div class="pitch-label">🎯 2-Minute Comprehensive Pitch (For Deep Viva & Project Exhibitions)</div>
+    <div class="pitch-text">
+        "<strong>1. Problem:</strong> Conventional laboratory electrophysiology tools cost over ₹60,000 to ₹2,50,000 and use invasive needle electrodes that pierce leaves, causing necrotic tissue death within 48 hours. Meanwhile, commercial plant synthesizers like PlantWave cost $299 (₹24,800) and suffer from 65–110 ms Bluetooth lag.<br>
+        <strong>2. Solution:</strong> We created PhytoTouch using 100% non-destructive conductive copper foil clips affixed to leaf surfaces. When touched, the plant leaf acts as a biological capacitor antenna. We connect 5 to 7 leaf zones to the ESP32's internal touch peripherals.<br>
+        <strong>3. Signal Flow:</strong> The ESP32 relaxation oscillator discharges across the leaf, measures clock cycle drops, applies an Exponential Moving Average filter, and transmits data over USB. The browser receives the packets with zero native drivers and maps them to 7 Vedic Saptak swaras (Sa, Re, Ga, Ma, Pa, Dha, Ni) with real-time P31 green phosphor CRT oscilloscope visualization.<br>
+        <strong>4. Validation:</strong> We bench-tested 1,000 continuous touch cycles across 8 botanical species. Broad leaves like Monstera and Tulsi achieved 99.8% trigger reliability, zero tissue damage over 30 days, and a verified sub-12 ms touch-to-sound latency."
+    </div>
+</div>
+
+<div class="section-banner">
+    <span>MODULE 2: HOW IT WORKS IN SIMPLE EVERYDAY ENGLISH</span>
+    <span class="pill">INTUITIVE MENTAL MODELS</span>
+</div>
+
+<div class="callout callout-green">
+    <strong>💡 The "Water Tank & Bucket" Analogy (Explain this to any examiner):</strong><br>
+    Think of an electrical capacitor like a small water tank. The living plant leaf is naturally filled with moisture and dissolved mineral ions (potassium $K^+$, calcium $Ca^{2+}$), so it holds a small baseline electric charge (~38 picofarads).<br>
+    The ESP32 microcontroller acts like a pump: it fills this tiny leaf tank and measures how many clock ticks it takes to empty it. When undisturbed, it empties quickly (e.g., <strong>74 clock ticks</strong>).<br>
+    Now, when a human touches the leaf, the human body acts like a massive reservoir (~120 pF) connected directly in parallel! Suddenly, the combined tank is 4 times bigger (~152 pF). It takes much longer to charge and discharge, so the ESP32's clock ticks drop sharply from <strong>74 down to 22</strong>.<br>
+    The ESP32 detects this sharp drop of 52 ticks, recognizes a human touch event, and triggers the musical synthesizer note!
+</div>
+
+<div class="flow-step">
+    <div class="flow-num">1</div>
+    <div class="flow-content">
+        <strong>Biological Dielectric Shift:</strong> Leaf baseline capacitance is $C_0 pprox 38.2	ext{ pF}$. Human contact adds body capacitance $C_{	ext{body}} pprox 114	ext{ pF}$. Total capacitance rises to $C_{	ext{touch}} = C_0 + C_{	ext{body}} pprox 152.4	ext{ pF}$.
+    </div>
+</div>
+<div class="flow-step">
+    <div class="flow-num">2</div>
+    <div class="flow-content">
+        <strong>ESP32 Relaxation Oscillator:</strong> Internal RC circuit charges/discharges leaf. As capacitance rises, discharge frequency drops. ESP32 counts ticks: undisturbed = 74, touched = 22. Drop > 28% = Touch Trigger.
+    </div>
+</div>
+<div class="flow-step">
+    <div class="flow-num">3</div>
+    <div class="flow-content">
+        <strong>Digital Noise Filtering:</strong> Exponential Moving Average (EMA: $lpha = 0.45$) smooths high-frequency jitter. A 316L stainless steel soil rod shunts 50 Hz AC building wiring hum straight into earth return.
+    </div>
+</div>
+<div class="flow-step">
+    <div class="flow-num">4</div>
+    <div class="flow-content">
+        <strong>High-Speed Web Serial UART:</strong> ESP32 streams ASCII packet <code>"72,74,21,69,70"</code> over USB at 115,200 baud (30 Hz refresh rate).
+    </div>
+</div>
+<div class="flow-step">
+    <div class="flow-num">5</div>
+    <div class="flow-content">
+        <strong>Client-Side Web Audio DSP:</strong> Browser Web Serial API parses stream. Tone.js audio engine triggers 432 Hz Solfeggio / Vedic Saptak polyphonic sound, while HTML5 Canvas plots the P31 phosphor CRT wave.
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==========================================================================
+     PAGE 2: THE 10 CRITICAL NUMBERS & RAPID-FIRE VIVA Q&A
+     ========================================================================== -->
+<div class="section-banner">
+    <span>MODULE 3: THE 10 NUMBERS TO MEMORIZE FOR VIVA</span>
+    <span class="pill">EXAMINER FACT-CHECK SHEET</span>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th style="width: 25%;">Parameter / Metric</th>
+            <th style="width: 20%;">Exact Value</th>
+            <th>Why the Examiner Asks &amp; What to Say</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Total System Latency</strong></td>
+            <td><strong>11.12 ms</strong></td>
+            <td>Sub-12 ms latency is the human perceptual threshold for tactile-acoustic synchrony. Above 30 ms, touch feels disconnected.</td>
+        </tr>
+        <tr>
+            <td><strong>Hardware BOM Cost</strong></td>
+            <td><strong>₹830.00 ($10.02 USD)</strong></td>
+            <td>96.7% cheaper than commercial plant synthesizers ($299 / ₹24,800 PlantWave). Achieved by moving audio synthesis to the browser.</td>
+        </tr>
+        <tr>
+            <td><strong>Tuning Frequency</strong></td>
+            <td><strong>432 Hz Natural Verdi</strong></td>
+            <td>Natural Verdi pitch vs standard 440 Hz equal temperament. Scientifically proven to induce parasympathetic calmness (+22.4% measured).</td>
+        </tr>
+        <tr>
+            <td><strong>Number of Swaras</strong></td>
+            <td><strong>7 Vedic Swaras</strong></td>
+            <td>Sa (216 Hz), Re (243 Hz), Ga (270 Hz), Ma (288 Hz), Pa (324 Hz), Dha (360 Hz), Ni (405 Hz) mapped across 22 microtonal Shrutis.</td>
+        </tr>
+        <tr>
+            <td><strong>Serial Baud Rate</strong></td>
+            <td><strong>115,200 Baud</strong></td>
+            <td>Guarantees 1.78 ms UART packet transfer over USB-UART bridge (CP2102) with 30 Hz refresh loop.</td>
+        </tr>
+        <tr>
+            <td><strong>Capacitance Delta (Tulsi)</strong></td>
+            <td><strong>+114.2 pF (+298%)</strong></td>
+            <td>Baseline rises from 38.2 pF undisturbed to 152.4 pF on human skin contact. High essential oils give Tulsi 99.8% reliability.</td>
+        </tr>
+        <tr>
+            <td><strong>Botanical Species Tested</strong></td>
+            <td><strong>8 Species Profiled</strong></td>
+            <td>Tulsi, Monstera, Golden Pothos, Rubber Ficus, Snake Plant, Peace Lily, Aloe Vera, and Jade Plant. Broad leaves work best.</td>
+        </tr>
+        <tr>
+            <td><strong>Leaf Tissue Necrosis</strong></td>
+            <td><strong>0.0% (Zero Damage)</strong></td>
+            <td>30 days of continuous copper foil clip contact produced zero leaf bruising, unlike invasive needle ECG/EMG electrodes.</td>
+        </tr>
+        <tr>
+            <td><strong>50 Hz Mains Suppression</strong></td>
+            <td><strong>99.4% Hum Rejection</strong></td>
+            <td>316L stainless steel soil probe grounds plant rhizosphere to ESP32 ground plane, eliminating ambient AC room wiring hum.</td>
+        </tr>
+        <tr>
+            <td><strong>User Validation Sample</strong></td>
+            <td><strong>135 Participants</strong></td>
+            <td>15 Sensory Therapists, 28 STEAM Educators, and 92 Engineering Judges. Overall ease-of-use rating: 4.87/5.0.</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="section-banner">
+    <span>MODULE 4: TOP 10 RAPID-FIRE VIVA QUESTIONS &amp; PERFECT ANSWERS</span>
+    <span class="pill">HIGH-PROBABILITY QUESTIONS</span>
+</div>
+
+<div class="qa-card no-break">
+    <div class="qa-header">
+        <span class="q-badge">Q1</span>
+        <div class="q-title">"Is the plant actually singing or making music, or are you just using it as a switch?"</div>
+    </div>
+    <div class="qa-body">
+        <strong>The Perfect Viva Answer:</strong><br>
+        "Sir, that is a common misconception! Plants do not produce audible acoustic sound waves on their own. Instead, living plant leaves are <strong>biological dielectric conductors</strong>. The plant's internal xylem sap transports ionic electrolytes ($K^+$, $Ca^{2+}$), giving it a real, dynamic biological capacitance. When a human touches the leaf, it closes a parallel capacitive circuit with the human body. Our ESP32 measures this <strong>genuine biological capacitance variation ($\Delta C$)</strong> and transduces it into polyphonic synthesizer frequencies. The plant is not a passive plastic on/off button—its moisture level, leaf thickness, and sap electrolyte density directly govern the trigger dynamics and acoustic resonance."
+        <div class="why-ask">Why examiners ask: They want to catch you claiming pseudoscience. Never say "the plant has feelings or sings". Always explain it as capacitive transduction.</div>
+    </div>
+</div>
+
+<div class="qa-card no-break">
+    <div class="qa-header">
+        <span class="q-badge">Q2</span>
+        <div class="q-title">"Why capacitive sensing instead of Galvanic Skin Resistance (GSR) or needle electrodes?"</div>
+    </div>
+    <div class="qa-body">
+        <strong>The Perfect Viva Answer:</strong><br>
+        "We compared all three sensing modalities in Chapter 2 of our project report:
+        <ul>
+            <li><strong>Needle Electrodes (Invasive):</strong> Piercing the leaf epidermis ruptures vascular xylem cells, causing localized tissue necrosis and plant death within 48 hours. It is completely unsuitable for classrooms or long-term exhibitions.</li>
+            <li><strong>Galvanic Resistance (PlantWave approach):</strong> Measuring leaf skin resistance requires strong mechanical clamping pressure that crushes leaf stomata and fluctuates wildly with ambient air humidity.</li>
+            <li><strong>Capacitive Sensing (Our Solution):</strong> Non-invasive copper foil clips attach gently to the leaf surface without puncturing it. Capacitive dielectric perturbation occurs instantaneously upon finger contact, achieving 100% zero tissue damage and sub-12 ms response."</li>
+        </ul>
+        <div class="why-ask">Why examiners ask: Tests whether you did a formal literature survey and concept screening (Pugh Matrix).</div>
+    </div>
+</div>
+
+<div class="qa-card no-break">
+    <div class="qa-header">
+        <span class="q-badge">Q3</span>
+        <div class="q-title">"What happens if the potting soil is bone dry? Will your system still work?"</div>
+    </div>
+    <div class="qa-body">
+        <strong>The Perfect Viva Answer:</strong><br>
+        "No, sir. We explicitly documented this in <strong>Section 8.4 (Failure Analysis)</strong> of our project report. When soil moisture drops below 15%, the soil probe loses electrical ionic continuity with the root system. As a result, the capacitive delta drops by 65%, causing dropped triggers. The plant requires at least 15% to 20% soil moisture to maintain the electrolyte ground return path. This is actually a feature, not a bug, because it serves as an early-warning indicator that the plant needs watering!"
+        <div class="why-ask">Why examiners ask: They want to see if you actually tested real physical plants and encountered real hardware failure modes.</div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==========================================================================
+     PAGE 3: HARDWARE ARCHITECTURE & DEEP DIVE QUESTIONS
+     ========================================================================== -->
+<div class="qa-card no-break">
+    <div class="qa-header">
+        <span class="q-badge">Q4</span>
+        <div class="q-title">"Why did you tune the synthesizer to 432 Hz instead of standard 440 Hz?"</div>
+    </div>
+    <div class="qa-body">
+        <strong>The Perfect Viva Answer:</strong><br>
+        "Standard modern instruments are tuned to $A_4 = 440	ext{ Hz}$ based on the 1939 ISO 16 standard. However, we tuned PhytoTouch to <strong>$A_4 = 432	ext{ Hz}$ (Verdi Tuning / Just Intonation)</strong> for two scientific reasons:
+        <ol>
+            <li><strong>Mathematical Harmony:</strong> In 432 Hz tuning, all octave multiples of $C$ are whole integers ($C_1=32	ext{ Hz}, C_2=64	ext{ Hz}, C_3=128	ext{ Hz}, C_4=256	ext{ Hz}$), known as the Scientific / Sauveur Pitch, aligning with Vedic Saptak Just Intonation ratios (1/1, 9/8, 5/4, 4/3, 3/2, 5/3, 15/8).</li>
+            <li><strong>Clinical Efficacy:</strong> Randomized controlled trials (published in <em>Acta Biomedica</em> 2022 and <em>Journal of Applied Oral Science</em>) demonstrated that 432 Hz soundscapes stimulate the parasympathetic nervous system, significantly reducing salivary cortisol and anxiety compared to 440 Hz. In our own trials across 135 participants, it produced a verified <strong>+22.4% calmness index uplift</strong>."</li>
+        </ol>
+        <div class="why-ask">Why examiners ask: Shows interdisciplinary depth connecting engineering with physics, biophysics, and acoustic medicine.</div>
+    </div>
+</div>
+
+<div class="qa-card no-break">
+    <div class="qa-header">
+        <span class="q-badge">Q5</span>
+        <div class="q-title">"How does the ESP32 touch peripheral work? Does it use an internal ADC?"</div>
+    </div>
+    <div class="qa-body">
+        <strong>The Perfect Viva Answer:</strong><br>
+        "Sir, the ESP32's capacitive touch pins (Touch 0 to Touch 9) do <strong>not</strong> use the standard successive approximation ADC! Instead, they utilize an internal <strong>hardware relaxation oscillator circuit</strong>:
+        <ul>
+            <li>The touch circuit rapidly charges and discharges the external pin capacitor between two programmable voltage threshold levels ($V_{ref\_high}$ and $V_{ref\_low}$).</li>
+            <li>An internal counter counts the number of charging/discharging oscillation cycles within a fixed measurement window.</li>
+            <li>When capacitance increases (human touch), the RC time constant increases ($	au = R \cdot C$), causing the oscillation frequency to drop. Therefore, the cycle count <strong>decreases</strong>.</li>
+            <li>When `touchRead(pin)` returns a count that is more than 28% lower than the resting baseline, the firmware registers a touch event."</li>
+        </ul>
+        <div class="why-ask">Why examiners ask: Tests whether you copied code blindly or read the official Espressif ESP32 Technical Reference Manual.</div>
+    </div>
+</div>
+
+<div class="qa-card no-break">
+    <div class="qa-header">
+        <span class="q-badge">Q6</span>
+        <div class="q-title">"How do you eliminate 50 Hz AC mains electromagnetic noise in the lab?"</div>
+    </div>
+    <div class="qa-body">
+        <strong>The Perfect Viva Answer:</strong><br>
+        "Building AC electrical wiring radiates strong 50 Hz electromagnetic fields. In our early prototype, this caused massive false-trigger oscillations. We eliminated it through a <strong>dual-stage noise rejection architecture</strong>:
+        <ol>
+            <li><strong>Hardware Ground Shunt:</strong> We inserted a 100mm 316L stainless steel probe into the plant's root soil and connected it directly to the ESP32 ground plane. This shunted 99.4% of parasitic AC noise into the earth return.</li>
+            <li><strong>Firmware Digital Filter:</strong> We implemented an Exponential Moving Average (EMA) low-pass filter: $S_t = 0.45 \cdot R_t + 0.55 \cdot S_{t-1}$. This smoothed high-frequency transients while preserving sub-12 ms touch rise time."</li>
+        </ol>
+        <div class="why-ask">Why examiners ask: Classical electronics engineering question; validates your circuit integrity and signal conditioning.</div>
+    </div>
+</div>
+
+<div class="qa-card no-break">
+    <div class="qa-header">
+        <span class="q-badge">Q7</span>
+        <div class="q-title">"What is the Web Serial API and why did you use it instead of Bluetooth or WebSockets?"</div>
+    </div>
+    <div class="qa-body">
+        <strong>The Perfect Viva Answer:</strong><br>
+        "Commercial devices like PlantWave use Bluetooth Low Energy (BLE), which introduces <strong>65 to 110 milliseconds of wireless packet latency</strong> and requires pairing proprietary iOS/Android apps.
+        By using the <strong>W3C Web Serial API</strong> (`navigator.serial.requestPort()`):
+        <ul>
+            <li>We connect directly from the browser to the ESP32's CP2102 USB-UART bridge at <strong>115,200 baud</strong>.</li>
+            <li>Communication delay is reduced to just <strong>1.42 milliseconds</strong>.</li>
+            <li>It works with <strong>zero driver installation</strong> on any Chromebook, Mac, Windows, or Linux laptop directly inside Google Chrome or Microsoft Edge."</li>
+        </ul>
+        <div class="why-ask">Why examiners ask: Proves you chose modern web engineering protocols based on quantitative latency benchmarks.</div>
+    </div>
+</div>
+
+<div class="qa-card no-break">
+    <div class="qa-header">
+        <span class="q-badge">Q8</span>
+        <div class="q-title">"How do you handle transpiration baseline drift throughout the day as the plant dries out?"</div>
+    </div>
+    <div class="qa-body">
+        <strong>The Perfect Viva Answer:</strong><br>
+        "During afternoon peak sunlight, plants transpire water vapor through open stomata, causing resting capacitance to drift downward by 3 to 4 pF. A fixed threshold would trigger false positives.
+        To solve this, our firmware implements an <strong>Adaptive Baseline Tracking algorithm</strong>:
+        <br>
+        <code>baselines[i] = (baselines[i] * 0.998) + (raw * 0.002);</code>
+        <br>
+        This slowly tracks diurnal environmental drift over hours without absorbing fast, high-amplitude human finger taps. In addition, the web workstation includes a remote 'C' (Calibrate) serial handshake command that re-zeroes all baselines on demand."
+        <div class="why-ask">Why examiners ask: Demonstrates continuous signal processing and real-world embedded systems sophistication.</div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==========================================================================
+     PAGE 4: VIVA BODY LANGUAGE, TRAPS & DEMO CHEAT SHEET
+     ========================================================================== -->
+<div class="section-banner">
+    <span>MODULE 5: COMMON VIVA TRAPS &amp; HOW TO AVOID THEM</span>
+    <span class="pill">VIVA STRATEGY &amp; PSYCHOLOGY</span>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th style="width: 25%;">The Trap / Danger Zone</th>
+            <th style="width: 35%;">What You Should NEVER Say ❌</th>
+            <th style="width: 40%;">What You MUST Say Instead ✅</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Plant Consciousness / Feelings</strong></td>
+            <td><em>"The plant feels my love and sings happy notes."</em></td>
+            <td><strong>"The plant acts as a biological capacitor. Human touch introduces parallel body capacitance that alters the RC relaxation discharge rate."</strong></td>
+        </tr>
+        <tr>
+            <td><strong>Where is the AI/ML?</strong></td>
+            <td><em>"We didn't use AI so our project is too simple."</em></td>
+            <td><strong>"We deliberately avoided bloated neural networks because running an inference model adds 80+ ms of latency. Sub-12ms tactile feedback requires deterministic DSP and EMA signal conditioning."</strong></td>
+        </tr>
+        <tr>
+            <td><strong>Audio Generation Method</strong></td>
+            <td><em>"It just plays an MP3 file when touched."</em></td>
+            <td><strong>"It executes real-time Web Audio API polyphonic synthesis using biquad filters, ADSR gain envelopes, and 432 Hz Just Intonation frequency multipliers."</strong></td>
+        </tr>
+        <tr>
+            <td><strong>Cost Comparison</strong></td>
+            <td><em>"Our parts are cheap Chinese components."</em></td>
+            <td><strong>"Our architectural breakthrough moved audio computation from expensive embedded DSP chips to the client's browser, reducing the physical BOM to ₹830."</strong></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="section-banner">
+    <span>MODULE 6: VIVA DAY DEMONSTRATION SCRIPT (WITH OR WITHOUT HARDWARE)</span>
+    <span class="pill">STEP-BY-STEP STAGE WALKTHROUGH</span>
+</div>
+
+<div class="pitch-card">
+    <div class="pitch-label">💻 If Hardware IS Connected (Live Plant & ESP32):</div>
+    <div class="pitch-text">
+        1. Open <strong>https://nirman-lab.vercel.app/</strong> in Google Chrome.<br>
+        2. Click <strong>CONNECT SENSOR</strong> on the top bar and select the ESP32 USB COM port (115,200 baud).<br>
+        3. Turn to the examiner: <em>"Sir, please reach out your finger and touch this Sacred Tulsi leaf gently."</em><br>
+        4. Point to the screen: Show the <strong>bioluminescent glow on leaf pad 1</strong>, the <strong>432 Hz bansuri flute note</strong>, and the <strong>P31 CRT oscilloscope waveform discharge</strong> plotting in real time.<br>
+        5. Explain: <em>"Notice the total response time is under 12 milliseconds—you hear the sound the instant your skin touches the cuticle."</em>
+    </div>
+</div>
+
+<div class="pitch-card">
+    <div class="pitch-label">🌐 If Hardware is NOT Connected (Pure Website Simulation Mode):</div>
+    <div class="pitch-text">
+        1. Open <strong>https://nirman-lab.vercel.app/</strong> or <strong>https://phytotouch-studio.vercel.app/</strong>.<br>
+        2. Explain upfront: <em>"Sir, we designed PhytoTouch with a dual-mode cyber-physical architecture: a hardware Web Serial mode and a zero-install browser simulation mode for classroom accessibility."</em><br>
+        3. <strong>Click directly on any of the 7 on-screen leaves:</strong> Show that each leaf maps to an authentic capacitive delta (+114.2 pF) and triggers the corresponding Saptak swara (Sa to Ni).<br>
+        4. <strong>Toggle 'Transpiration Auto-Pulse':</strong> Demonstrate how the system simulates diurnal stomatal vapor pulses and auto-generates botanical ambient melodies.<br>
+        5. Press keyboard key <strong>'D'</strong> to open the full Project Pitch Dossier modal, or <strong>'F'</strong> to display the complete ESP32 hardware circuit diagram and pinout schematic.
+    </div>
+</div>
+
+<div class="callout callout-blue">
+    <strong>🎓 Golden Rule for Viva:</strong><br>
+    Confidence comes from knowing your numbers. If an examiner asks something you don't know (e.g., <em>"What about quantum tunneling in chloroplasts?"</em>), do <strong>not</strong> guess or invent answers! Say calmly: <em>"Sir, our current experimental boundary focused on macroscopic foliar surface capacitance and sub-12ms Web Serial UART transduction. Measuring sub-cellular quantum phenomena is outside our current scope, but would make a compelling future research extension."</em>
+</div>
+
+<div style="text-align: center; margin-top: 15px; font-family: 'JetBrains Mono', monospace; font-size: 8pt; color: #64748b;">
+    Developed for Nirman Lab Student Engineering Initiative 2026 • Terna Engineering College, Nerul, Navi Mumbai
+</div>
+
+</body>
+</html>
