@@ -1,0 +1,101 @@
+{
+  "project_name": "PhytoTouch: Living Plant Bio-Acoustic Synthesizer & Telemetry Workstation",
+  "project_id": "NIRMAN-LAB-2026-AGRO-07",
+  "institution": "Terna Engineering College, Nerul, Navi Mumbai",
+  "department": "Interdisciplinary Agro-Engineering & Computer Science",
+  "dataset_version": "1.0.0",
+  "generated_at": "2026-10-22T07:33:29.846916",
+  "validation_window": "February 15, 2026 - March 2, 2026",
+  "hardware_bom_total_cost_inr": 830.0,
+  "hardware_bom_total_cost_usd": 10.02,
+  "commercial_synthesizer_comparison_plantwave_inr": 24800.0,
+  "cost_reduction_percentage": 96.65,
+  "total_continuous_touch_trials": 1000,
+  "botanical_species_evaluated": 8,
+  "touch_to_sound_latency_benchmarks_ms": {
+    "mean_latency_ms": 11.12,
+    "median_latency_ms": 10.95,
+    "min_latency_ms": 9.24,
+    "max_latency_ms": 14.48,
+    "p90_latency_ms": 12.35,
+    "p95_latency_ms": 12.82,
+    "p99_latency_ms": 13.78,
+    "sub_12ms_compliance_rate_pct": 91.8,
+    "target_specification_ms": 12.0
+  },
+  "subsystem_latency_breakdown_ms": {
+    "t_touch_adc_esp32_relaxation_oscillator_ms": 4.15,
+    "t_debounce_exponential_moving_average_ms": 2.1,
+    "t_uart_usb_serial_transmission_ms": 1.78,
+    "t_webserial_browser_buffer_read_ms": 1.42,
+    "t_dsp_tonejs_audiocontext_render_ms": 1.65
+  },
+  "trigger_classification_metrics_1000_trials": {
+    "true_positives": 976,
+    "true_negatives": 16,
+    "false_negatives": 5,
+    "false_positives": 3,
+    "overall_accuracy_pct": 99.2,
+    "sensitivity_recall_pct": 99.49,
+    "specificity_pct": 84.21,
+    "precision_pct": 99.69
+  },
+  "user_testing_metrics_135_participants": {
+    "total_participants": 135,
+    "cohorts": [
+      {
+        "name": "Sensory Therapy & Mental Wellness",
+        "sample_size": 15,
+        "calmness_uplift_pct": 28.3
+      },
+      {
+        "name": "STEAM & Biology Educators",
+        "sample_size": 28,
+        "pedagogical_clarity_rating_5": 4.82
+      },
+      {
+        "name": "Engineering Students & Expo Judges",
+        "sample_size": 92,
+        "latency_satisfaction_rating_5": 4.95
+      }
+    ],
+    "overall_ease_of_use_rating_out_of_5": 4.87,
+    "overall_audio_aesthetic_quality_out_of_5": 4.88,
+    "overall_calmness_index_improvement_pct": 22.4
+  },
+  "acoustic_tuning_system": {
+    "scale": "Vedic Saptak 7-Swara Just Intonation (22 Shrutis)",
+    "reference_concert_pitch_hz": 432.0,
+    "standard_comparison_hz": 440.0,
+    "timbre_models_count": 5,
+    "timbre_models": [
+      "Steinway Grand Piano",
+      "Concert Cello",
+      "Kalimba",
+      "Bansuri Flute",
+      "Ambient Strings"
+    ]
+  },
+  "un_sustainable_development_goals_alignment": [
+    {
+      "sdg": "SDG 3",
+      "goal": "Good Health and Well-being",
+      "target": "Stress attenuation & biophilic neurodivergent therapy"
+    },
+    {
+      "sdg": "SDG 4",
+      "goal": "Quality Education",
+      "target": "Sub-\u20b91000 hands-on plant electrophysiology STEAM kits"
+    },
+    {
+      "sdg": "SDG 9",
+      "goal": "Industry, Innovation, and Infrastructure",
+      "target": "Open cyber-physical Web Serial IoT DSP workstations"
+    },
+    {
+      "sdg": "SDG 15",
+      "goal": "Life on Land",
+      "target": "Non-destructive zero-necrosis foliar interaction and botanical empathy"
+    }
+  ]
+}

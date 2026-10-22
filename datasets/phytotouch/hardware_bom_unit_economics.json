@@ -1,0 +1,62 @@
+[
+  {
+    "item_no": 1,
+    "component_name": "ESP32 DevKit V1 Microcontroller",
+    "part_specification": "ESP-WROOM-32, 30-Pin, CP2102 USB-UART, Dual Tensilica LX6 @ 240MHz",
+    "quantity": 1,
+    "unit_cost_inr": 350.0,
+    "unit_cost_usd": 4.22,
+    "procurement_source": "Local Electronics Market (Lamington Road / Robu.in)",
+    "function_description": "Executes capacitive touch relaxation oscillator ADC, EMA filtering, 115200 baud UART stream",
+    "commercial_alternative_cost_inr": 8500.0,
+    "cost_reduction_ratio_pct": 95.88
+  },
+  {
+    "item_no": 2,
+    "component_name": "Silicone Insulated Alligator Lead Wires",
+    "part_specification": "26 AWG Ultra-Flexible Copper, 10-Pack Assorted Colors, 50cm Length",
+    "quantity": 1,
+    "unit_cost_inr": 140.0,
+    "unit_cost_usd": 1.69,
+    "procurement_source": "Local STEM Lab Supplier (Vashi Electronics)",
+    "function_description": "Provides non-invasive electrical connection between ESP32 touch pins and leaf foil contacts",
+    "commercial_alternative_cost_inr": 1200.0,
+    "cost_reduction_ratio_pct": 88.33
+  },
+  {
+    "item_no": 3,
+    "component_name": "Conductive Copper Foil Tape Strip",
+    "part_specification": "10mm width x 20m roll, Dual Conductive Acrylic Adhesive, 0.06mm thickness",
+    "quantity": 1,
+    "unit_cost_inr": 120.0,
+    "unit_cost_usd": 1.45,
+    "procurement_source": "Electrical Hardware Depot (Navi Mumbai)",
+    "function_description": "Affixes non-destructively to abaxial leaf surface forming 15x15mm capacitive electrode pads",
+    "commercial_alternative_cost_inr": 3500.0,
+    "cost_reduction_ratio_pct": 96.57
+  },
+  {
+    "item_no": 4,
+    "component_name": "Mini Solderless Breadboard & Jumpers",
+    "part_specification": "170 Tie-Point Mini Breadboard + 20 DuPont Jumper Wires M-to-M",
+    "quantity": 1,
+    "unit_cost_inr": 110.0,
+    "unit_cost_usd": 1.33,
+    "procurement_source": "Standard Lab Kit Distributor",
+    "function_description": "Secure breakout of 7 capacitive touch GPIOs, ground plane, and status LED",
+    "commercial_alternative_cost_inr": 2800.0,
+    "cost_reduction_ratio_pct": 96.07
+  },
+  {
+    "item_no": 5,
+    "component_name": "316L Stainless Soil Probe & USB-C Cable",
+    "part_specification": "100mm 316L Stainless Steel Earth Reference Rod + 1m Braided USB-C Data Cable",
+    "quantity": 2,
+    "unit_cost_inr": 110.0,
+    "unit_cost_usd": 1.33,
+    "procurement_source": "Sanitary Hardware / Cable Store",
+    "function_description": "Suppresses 50Hz AC mains ambient electrical hum and streams 115200 baud serial to browser",
+    "commercial_alternative_cost_inr": 8800.0,
+    "cost_reduction_ratio_pct": 98.75
+  }
+]
