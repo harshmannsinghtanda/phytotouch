@@ -28,8 +28,8 @@ export function Header({
             className="flex items-center gap-3 text-left cursor-pointer group"
           >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#06d6a0] to-[#10b981] p-0.5 flex items-center justify-center shadow-[0_0_15px_rgba(6,214,160,0.3)] group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-[#09100c] rounded-[10px] flex items-center justify-center">
-                <span className="text-xl">🌿</span>
+              <div className="w-full h-full bg-[#09100c] rounded-[10px] flex items-center justify-center p-1">
+                <img src="/phytotouch_logo.svg" alt="PhytoTouch Logo" className="w-7 h-7 object-contain drop-shadow" />
               </div>
             </div>
             <div className="flex flex-col">
