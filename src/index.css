@@ -1,0 +1,413 @@
+/* ==============================================================================
+   index.css
+   PhytoTouch: World-Class Clean UI & Audio-Visual Design System
+   Inspired by Linear, Apple Pro, and Teenage Engineering
+   Complies with world-class-clean-ui standards & WCAG AAA Contrast
+   Nirman Lab 2026 - Student Engineering Initiative
+   ============================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Deep Obsidian & Pure Graphite Surfaces */
+  --bg-deep: #07090e;
+  --card-bg: rgba(13, 17, 24, 0.95);
+  --card-surface: #10151f;
+  --card-hover: #171d2b;
+  --card-inset: #090b11;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-highlight: rgba(255, 255, 255, 0.16);
+  --border-active: rgba(245, 158, 11, 0.65);
+
+  /* High-Contrast Accents */
+  --copper-gold: #f59e0b;
+  --temple-amber: #d97706;
+  --leaf-emerald: #10b981;
+  --cyan-resonance: #06b6d4;
+  --electric-violet: #8b5cf6;
+
+  /* High-Contrast Typography */
+  --text-main: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* Background Atmosphere: Dynamic Studio Vignette */
+body {
+  background-image: 
+    var(--bg-gradient, radial-gradient(circle at 50% 15%, rgba(16, 185, 129, 0.08) 0%, transparent 60%)),
+    radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px;
+  background-position: 0 0, 16px 16px;
+}
+
+/* Theme 1: Obsidian Studio (Default) */
+[data-theme="obsidian"], :root {
+  --bg-deep: #07090e;
+  --bg-gradient: radial-gradient(circle at 50% 15%, rgba(16, 185, 129, 0.08) 0%, transparent 60%), radial-gradient(circle at 50% 85%, rgba(245, 158, 11, 0.06) 0%, transparent 50%);
+  --theme-accent: #10b981;
+  --theme-secondary: #f59e0b;
+}
+
+/* Theme 2: Moonlight Flora */
+[data-theme="moonlight"] {
+  --bg-deep: #050714;
+  --bg-gradient: radial-gradient(circle at 50% 15%, rgba(6, 182, 212, 0.12) 0%, transparent 60%), radial-gradient(circle at 50% 85%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+  --theme-accent: #06b6d4;
+  --theme-secondary: #818cf8;
+}
+[data-theme="moonlight"] .keycap-tactile:hover {
+  border-color: rgba(6, 182, 212, 0.5) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8), 0 0 14px rgba(6, 182, 212, 0.3) !important;
+}
+[data-theme="moonlight"] .keycap-tactile:active,
+[data-theme="moonlight"] .keycap-tactile.active {
+  background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%) !important;
+  border-color: #67e8f9 !important;
+  box-shadow: 0 0 28px rgba(6, 182, 212, 0.9) !important;
+}
+
+/* Theme 3: Vedic Solar Gold */
+[data-theme="vedic"] {
+  --bg-deep: #0c0905;
+  --bg-gradient: radial-gradient(circle at 50% 15%, rgba(234, 179, 8, 0.14) 0%, transparent 60%), radial-gradient(circle at 50% 85%, rgba(249, 115, 22, 0.08) 0%, transparent 50%);
+  --theme-accent: #eab308;
+  --theme-secondary: #f97316;
+}
+[data-theme="vedic"] .keycap-tactile:hover {
+  border-color: rgba(234, 179, 8, 0.6) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8), 0 0 14px rgba(234, 179, 8, 0.3) !important;
+}
+[data-theme="vedic"] .keycap-tactile:active,
+[data-theme="vedic"] .keycap-tactile.active {
+  background: linear-gradient(180deg, #ca8a04 0%, #854d0e 100%) !important;
+  border-color: #fef08a !important;
+  box-shadow: 0 0 28px rgba(234, 179, 8, 0.9) !important;
+}
+
+/* Theme 4: Lab High-Contrast (WCAG AAA+) */
+[data-theme="lab"] {
+  --bg-deep: #000000;
+  --bg-gradient: radial-gradient(circle at 50% 15%, rgba(255, 255, 255, 0.05) 0%, transparent 60%), radial-gradient(circle at 50% 85%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+  --theme-accent: #ffffff;
+  --theme-secondary: #10b981;
+}
+[data-theme="lab"] .keycap-tactile {
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+[data-theme="lab"] .keycap-tactile:hover {
+  border-color: #ffffff !important;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Custom Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #07090e;
+}
+::-webkit-scrollbar-thumb {
+  background: #1c2230;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a3449;
+}
+
+/* Studio Tactile Keycaps (Emil Kowalski Craft) */
+.keycap-tactile {
+  background: linear-gradient(180deg, #222c3d 0%, #131924 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.22);
+  transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+
+.keycap-tactile:hover {
+  border-color: rgba(245, 158, 11, 0.45);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8), 0 0 14px rgba(245, 158, 11, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.keycap-tactile:active,
+.keycap-tactile.active {
+  background: linear-gradient(180deg, #b45309 0%, #78350f 100%) !important;
+  border-color: #fef08a !important;
+  box-shadow: 0 0 28px rgba(245, 158, 11, 0.9), inset 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+  transform: scale(0.95) translateY(2px) !important;
+}
+
+/* Studio Glass Panel Card */
+.studio-glass-panel {
+  background: linear-gradient(180deg, rgba(16, 21, 31, 0.95) 0%, rgba(10, 14, 21, 0.98) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Drawer Slide-in Animation */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-drawer-slide {
+  animation: slideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Bioluminescent Fluid Vein Pulse Animation */
+@keyframes fluidVeinFlow {
+  0% {
+    stroke-dashoffset: 80;
+    opacity: 0.1;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.15;
+  }
+}
+
+.animate-fluid-vein {
+  stroke-dasharray: 40 20;
+  animation: fluidVeinFlow 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Golden Electric Wire Pulse */
+@keyframes wireElectricPulse {
+  0% {
+    stroke-dashoffset: 60;
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.4;
+  }
+}
+
+.animate-wire-pulse {
+  stroke-dasharray: 15 10;
+  animation: wireElectricPulse 0.4s linear infinite;
+}
+
+/* ==============================================================================
+   Workstation Viewport & Stage Compactification
+   Eliminates vertical overflow & prevents elements from blocking each other
+   ============================================================================== */
+
+.workstation-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+.workstation-main {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.fullscreen-stage-wrapper {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0.75rem 0.5rem 0.75rem;
+  flex: 1;
+  min-height: 0;
+  user-select: none;
+  touch-action: none;
+  box-sizing: border-box;
+}
+
+/* Plant Specimen Container: Clamped & Constrained to never block other elements */
+.plant-specimen-viewport {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  height: 38vh;
+  max-height: 295px;
+  min-height: 180px;
+  aspect-ratio: 400 / 480;
+  margin: 0.15rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 1;
+}
+
+@media (min-height: 900px) {
+  .plant-specimen-viewport {
+    max-width: 390px;
+    height: 42vh;
+    max-height: 350px;
+  }
+}
+
+@media (max-height: 700px) {
+  .plant-specimen-viewport {
+    max-width: 270px;
+    height: 28vh;
+    max-height: 210px;
+    min-height: 140px;
+  }
+}
+
+.plant-specimen-svg {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.95));
+  overflow: visible;
+}
+
+/* Saptak Keybed Arc Grid */
+.saptak-keybed-box {
+  width: 100%;
+  max-width: 960px;
+  margin: 0.2rem auto 0 auto;
+  flex-shrink: 0;
+}
+
+.saptak-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.35rem;
+  align-items: end;
+}
+
+@media (min-width: 640px) {
+  .saptak-grid {
+    gap: 0.5rem;
+  }
+}
+
+.saptak-keycap {
+  border-radius: 14px;
+  padding: 0.35rem 0.25rem 0.45rem 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+  position: relative;
+  min-height: 78px;
+  max-height: 105px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .saptak-keycap {
+    border-radius: 16px;
+    padding: 0.45rem 0.35rem 0.55rem 0.35rem;
+    min-height: 88px;
+    max-height: 115px;
+  }
+}
+
+/* Specimen Status Top Pill */
+.specimen-status-bar {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+/* Bottom Quick Status Ribbon */
+.bottom-quick-ribbon {
+  width: 100%;
+  max-width: 960px;
+  margin: 0.25rem auto 0 auto;
+  padding: 0.35rem 0.75rem;
+  border-radius: 14px;
+  background-color: rgba(14, 18, 27, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* Sleek Audio Unlock Banner */
+.audio-unlock-banner {
+  width: calc(100% - 1.5rem);
+  max-width: 960px;
+  margin: 0.3rem auto;
+  padding: 0.35rem 0.75rem;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #059669 0%, #0d9488 50%, #059669 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid rgba(110, 231, 183, 0.4);
+  box-shadow: 0 4px 16px rgba(5, 150, 105, 0.3);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+

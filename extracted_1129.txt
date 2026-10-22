@@ -1,0 +1,776 @@
+=== PAGE 1 ===
+TERNA ENGINEERING COLLEGE
+Nirman Lab Project Report
+CitrusSense: Autonomous Optical Citrus Sorter and Mandi Loss 
+Prevention
+Department of [Department name]  |  AY 20[__]-20[__]
+Team: [Name 1 (Roll no.)], [Name 2 (Roll no.)], [Name 3 (Roll no.)]
+Faculty mentor / HOD: [Name]
+1
+
+
+=== PAGE 2 ===
+Abstract
+Question: 150 to 300 words, one paragraph. Cover the theme and SDG, the community problem, research 
+findings, final problem statement, engineering knowledge, solution and prototype, key validation results, and 
+impact. No references.
+Solution
+Post-harvest losses in citrus are a major problem in Indian mandis, where spoiled fruit is mixed with 
+good fruit during manual grading. This reduces traders’ returns and wastes food, which relates to 
+SDG 12, Target 12.3. Observations at [mandi name] and interviews with [number] [stakeholder 
+groups] showed that grading is slow and inconsistent. Our problem statement is: small mandi 
+traders need a low-cost, consistent way to grade citrus so that defective fruit is removed early. We 
+developed CitrusSense, an autonomous optical sorter that uses in-browser AI vision to recognise 
+citrus, grade it into A, B, C, D and Unripe categories, estimate shelf life, and show mandi value per 
+fruit, with a conveyor mechatronics module. Validation used [N] lab-standard specimens and a 20-
+photo benchmark, achieving [X]% grading accuracy at about [16] ms per scan. The prototype shows 
+potential to reduce loss, but results depend on lighting and sample size, and [state what was tested 
+on real hardware].
+Keywords: citrus sorting, computer vision, post-harvest loss, mandi, shelf-life estimation, 
+mechatronics
+2
+
+
+=== PAGE 3 ===
+List of Figures
+Figure No.
+Title of figure
+Page
+1.1
+Community observation at [location]
+[ ]
+2.1
+Survey findings chart ([N] respondents)
+[ ]
+3.1
+Fishbone diagram / problem tree
+[ ]
+5.1
+Concept sketches
+[ ]
+6.1
+System block diagram
+[ ]
+7.1
+CitrusSense prototype screenshots
+[ ]
+8.1
+Performance comparison graph
+[ ]
+List of Tables
+Table No.
+Title of table
+Page
+1.1
+SDG mapping
+[ ]
+2.1
+Stakeholder analysis
+[ ]
+4.1
+Subject contribution matrix
+[ ]
+5.1
+Evaluation matrix
+[ ]
+6.1
+Bill of materials and cost
+[ ]
+8.1
+User testing and feedback
+[ ]
+Abbreviations and Symbols
+Abbreviation / symbol
+Full form / meaning
+SDG
+Sustainable Development Goal
+ESP32
+Low-cost microcontroller with Wi-Fi and Bluetooth
+HSV
+Hue, Saturation, Value (colour model)
+mm
+Millimetre
+ms
+Millisecond
+DV
+Daily Value (share of recommended daily intake)
+APEDA
+Agricultural and Processed Food Products Export Development Authority
+CV
+Computer vision
+3
+
+
+=== PAGE 4 ===
+Chapter 1: Discover: Theme, Community and Problem 
+Identification
+Portfolio layer: Discover | Nirman Lab journey: Weeks 1 to 3
+1.1 Introduction and Semester Theme
+Question: Explain the semester theme in your own words and why it matters to society. State the objective of 
+the Nirman Lab project.
+Solution
+The semester theme is reducing waste in food supply chains through practical engineering. It 
+matters because food lost after harvest reduces farmers’ income, wastes resources such as water 
+and energy, and raises food prices for consumers. The objective of the Nirman Lab project is to 
+identify a real post-harvest problem at a local market and build a working, low-cost engineering 
+solution to it.
+1.2 SDG Mapping
+Question: Map the theme and your problem to one or more UN SDGs and the specific targets.
+Solution
+SDG No.
+Goal
+Target
+Relevance to my 
+problem
+12
+Responsible consumption 
+and production
+12.3: Halve food waste and reduce 
+food losses along production and 
+supply chains, including post-harvest 
+losses
+Citrus is lost between 
+harvest and sale at the 
+mandi
+9
+Industry, innovation and 
+infrastructure
+9.5: Enhance technological 
+capabilities
+Affordable sorting 
+technology for small 
+traders
+1.3 Local Problem Identification
+Question: List the problems you identified (Week 2 and Week 3). Explain how you chose one and why the 
+others were set aside. Mention the expert session, documentary or case study that helped.
+Solution
+Problems identified: (1) damaged citrus mixed with good fruit at [mandi name]; (2) long waiting 
+times for manual grading; (3) fruit spoiling in storage because shelf life is unknown; (4) [other 
+problem].
+We chose problem 1 because it causes the largest direct loss and is visible during every market day. 
+We set aside problem 3 because it needs long-term storage data we could not collect in the 
+semester. We discussed the problem with [expert name, role] on [date] and reviewed [documentary 
+or case study].
+1.4 Community Observation
+Question: Describe location, date, people involved and what you observed. Include labelled photographs of at 
+least 3 problems and 3 opportunities.
+Solution
+4
+
+
+=== PAGE 5 ===
+We visited [mandi name], [location], on [date] and spoke with [number] traders and workers. 
+Problems observed: (a) damaged or spoiled fruit packed with good fruit; (b) manual grading takes 
+[time] per crate; (c) no way to check ripeness or shelf life quickly. Opportunities: (a) traders already 
+use simple visual grading; (b) a camera-based tool fits the existing workflow; (c) [third opportunity]. 
+Insert labelled photographs of each problem and opportunity as Figure 1.1.
+1.5 Learning Reflection (Discover)
+Question: What surprised you? What did you assume that turned out to be wrong?
+Solution
+We assumed the main loss happened during transport. In fact, most damage was visible at the 
+mandi itself, during unloading and grading. This changed our focus from transport to grading.
+5
+
+
+=== PAGE 6 ===
+Chapter 2: Research: Understanding Users and Existing 
+Solutions
+Portfolio layer: Research | Nirman Lab journey: Weeks 4 and 6
+2.1 Research Methodology
+Question: Methods used (survey, interviews, focus group, observation, time-motion study, journey mapping), 
+sample size, selection of respondents, tools (Google Forms etc.), consent taken, limitations.
+Solution
+Methods: survey, semi-structured interviews, direct observation of grading, and time measurement 
+of [N] crates. Sample: [N] traders and [N] workers at [mandi name], chosen by convenience sampling 
+on market days. Tools: Google Forms for the survey and handwritten notes for observation. Consent: 
+verbal and written consent was taken, and no personal data is published. Limitations: one mandi 
+only, a small sample, and a single season.
+2.2 Stakeholder Analysis
+Question: Identify primary users, secondary users and influencers or decision makers.
+Solution
+Stakeholder group
+Who exactly
+Need / concern
+Method used
+Primary users
+Mandi traders and sorting 
+workers
+Faster, consistent grading; 
+fewer rejected crates
+Interview, 
+observation
+Secondary users
+Farmers and retailers who buy 
+from the mandi
+Predictable quality and shelf 
+life
+Interview
+Influencers
+Mandi committee and export 
+buyers
+Compliance with grading 
+standards
+Expert session
+2.3 Survey and Interview Findings
+Question: Present charts, tables and selected quotations. State what surprised you. Attach full forms and 
+transcripts in the appendices.
+Solution
+Of [N] respondents, [X]% said manual grading causes the most rejected fruit, and [Y]% said they 
+would use a tool that gives an instant grade. [Quote a respondent with their role, if they agreed.] 
+The most surprising result was that traders valued speed more than exact accuracy. Full survey data 
+is in Appendix A and interview notes in Appendix B.
+2.4 Empathy Map and User Persona
+Question: Give the empathy map (Says, Thinks, Does, Feels) and a persona of one typical user: name, age, 
+location, occupation, goals, frustrations.
+Solution
+• Says: “Good fruit gets spoiled when bad fruit is mixed in.”
+• Thinks: grading is slow and depends on experience.
+• Does: sorts by eye and by feel, crate by crate.
+• Feels: worried about losing money on rejected fruit.
+6
+
+
+=== PAGE 7 ===
+Persona: Ramesh, 45, wholesale citrus trader at [mandi name], [location]. Goal: sell more fruit at 
+better prices. Frustration: rejected crates reduce his margin.
+2.5 Literature Review and Patent Search
+Question: Review research papers, patents, government initiatives, startups and products related to the 
+problem.
+Solution
+We reviewed published work on optical fruit grading and found that camera-based colour and defect 
+detection is widely studied. We also checked existing commercial optical sorters, which are usually 
+costly and designed for large packhouses. Add your own sources here, and list only papers you have 
+read in the References.
+2.6 Benchmarking
+Question: Compare existing solutions with your proposed direction. Explain how yours will be different.
+Solution
+#
+Source and type
+What it does
+Gap / limitation
+1
+Industrial optical sorter 
+(commercial)
+Automatic high-speed sorting in 
+packhouses
+Too costly for small mandi 
+traders
+2
+Manual grading (practice)
+Visual and touch grading by 
+workers
+Slow and inconsistent
+3
+Weight-based sorting
+Separates fruit by weight
+Misses surface defects and 
+ripeness
+Our direction is a low-cost camera-based grader with a mechatronic sorter that grades into A, B, C, D 
+and Unripe categories and shows value per fruit. It is designed for a small mandi, not a packhouse.
+2.7 User Needs Document / Research Summary
+Question: List the key user needs and insights in 8 to 10 points.
+Solution
+Fast grading that does not slow the market.
+Consistent results regardless of who is grading.
+Clear grade categories traders recognise.
+Low cost per unit.
+Works in a noisy, dusty mandi environment.
+Shows value per fruit to support pricing.
+Helps reduce spoiled fruit mixed into good crates.
+Simple to operate with little training.
+Easy to repair with locally available parts.
+Respects trader privacy; no personal data is stored.
+7
+
+
+=== PAGE 8 ===
+Chapter 3: Define: Problem Statement and Root Cause 
+Analysis
+Portfolio layer: Define | Nirman Lab journey: Week 5
+3.1 Problem Analysis (5 Whys)
+Question: Show the chain of Why questions from the observed problem to the root cause.
+Solution
+1. Why is citrus lost at the mandi? Spoiled fruit is mixed with good fruit.
+2. Why is spoiled fruit mixed in? Grading is done quickly by eye and misses defects.
+3. Why is grading missed? Workers are under time pressure and grade by experience.
+4. Why is there no check? Small traders cannot afford automatic sorting equipment.
+5. Why can they not afford it? No low-cost sorting tool exists for small mandis. (Root cause)
+3.2 Fishbone Diagram / Problem Tree
+Question: Insert your fishbone diagram or problem tree.
+Solution
+Insert the fishbone diagram as Figure 3.1. Categories: People (fatigue, experience), Method (manual 
+visual grading), Equipment (no sorter), Environment (dust, noise, poor light), Cost (equipment too 
+expensive), Measurement (no shelf-life check).
+3.3 Engineering Constraints
+Question: Cost, time, safety, materials, skills, regulations, user limitations and similar constraints.
+Solution
+Cost: unit cost under ₹[Z]. Time: one semester. Safety: guards on moving parts and safe electrical 
+wiring. Materials: locally available components. Skills: team skills in electronics, programming and 
+design. Regulations: Codex standard for fresh citrus and APEDA export grading references. User 
+limitations: little training time and no reliable internet at some stalls.
+3.4 Final Problem Statement
+Question: Use the form: [User group] needs a way to [need] because [insight / root cause].
+Solution
+Small mandi traders need a low-cost way to grade citrus automatically because manual grading is 
+slow, inconsistent and misses spoiled fruit.
+3.5 Objectives and Success Criteria
+Question: List 3 to 5 measurable objectives that will show whether your solution works.
+Solution
+• Grade citrus into the correct category with at least [X]% accuracy on the 20-photo audit.
+• Complete each scan in about [16] ms.
+• Keep the unit cost under ₹[Z].
+• Show value per fruit and estimated shelf life for each graded fruit.
+8
+
+
+=== PAGE 9 ===
+Chapter 4: Connect: Engineering Knowledge Applied
+Portfolio layer: Connect Engineering Knowledge | Nirman Lab journey: Week 7
+4.1 Subject Contribution Matrix
+Question: Every subject of the semester should appear with the concept applied.
+Solution
+Semester subject
+Concept / topic applied
+How it helped my solution
+Where used 
+(section)
+Image processing
+Colour spaces (RGB to HSV), 
+thresholding, masking
+Detects lemon and citrus pixels 
+and defects
+6.2, 7.1
+Digital electronics / 
+microcontrollers
+ESP32 I/O and control
+Runs the sorter and laser 
+trigger
+6.1, 7.1
+Control systems
+Timing and actuation
+Sets diverter timing from belt 
+speed
+4.2, 6.1
+Mechanical design
+Chute and diverter design
+Physically separates graded 
+fruit
+6.3
+Programming
+Python and JavaScript
+Vision code and web interface
+7.1
+Food science
+Shelf-life and nutrient 
+basics
+Shelf-life estimate and nutrition 
+panel
+9.3
+Engineering statistics
+Accuracy and sample size
+Validation results and audit
+8.3
+4.2 Concepts Applied: Worked Examples
+Question: Show at least two worked examples: a formula, calculation, algorithm, circuit analysis, material 
+choice or optimisation from your syllabus applied to your problem.
+Solution
+Example 1: Diverter timing. Time for fruit to reach the diverter = distance ÷ belt speed. Example 
+values: 30 cm ÷ 10 cm/s = 3 s. Replace with your measured distance and speed.
+Example 2: Size from pixels. Diameter (mm) = measured pixel width × calibration factor (mm per 
+pixel). Example: a sample graded at 76.5 mm was measured with a calibration of [value] mm per 
+pixel. Show your calibration measurement.
+9
+
+
+=== PAGE 10 ===
+Chapter 5: Ideation and Concept Selection
+Portfolio layer: Ideation | Nirman Lab journey: Weeks 8 and 9
+5.1 Techniques Used
+Question: Brainstorming, mind map, SCAMPER, Crazy-8, design thinking tools, concept sketches. Include photos 
+of sheets.
+Solution
+We used brainstorming, a mind map, and SCAMPER. Photos of the sheets are in Appendix D.
+5.2 Idea Bank (minimum 20 ideas)
+Question: Number each idea with a one-line description.
+Solution
+• 1. Manual grading with a checklist.
+• 2. Weight-based sorting.
+• 3. Colour sensor only.
+• 4. Camera with AI vision for grading.
+• 5. Imported industrial sorter.
+• 6. Hand-held scanner for each crate.
+• 7. Conveyor with camera and air-jet diverter.
+• 8. Shelf-life calculator on paper.
+• 9. Mobile app grader.
+• 10. Ultrasonic firmness sensor.
+• 11. Laser detection of fruit presence.
+• 12. Multi-angle camera rotation.
+• 13. Grading kiosk at the mandi gate.
+• 14. Training video for workers.
+• 15. Price board showing grade-based value.
+• 16. Crate tagging with QR codes.
+• 17. Simulated conveyor for testing.
+• 18. Cloud dashboard for traders.
+• 19. Cold-storage monitor.
+• 20. Grade-based packing guide.
+5.3 Concept Sketches
+Question: Insert the best three to five concept sketches.
+Solution
+Insert sketches as Figure 5.1, showing the conveyor, camera, laser and diverter concept.
+5.4 Evaluation Matrix
+Question: Score concepts from 1 to 5 against feasibility, impact, cost, innovation and sustainability.
+Solution
+10
+
+
+=== PAGE 11 ===
+Criteria
+Concept A: Manual + 
+checklist
+Concept B: Weight 
+sorting
+Concept C: Camera + 
+conveyor (selected)
+Feasibility
+5
+4
+4
+Impact on users
+2
+2
+5
+Cost
+5
+4
+3
+Innovation
+1
+2
+4
+Sustainability
+3
+3
+4
+TOTAL
+16
+15
+20
+5.5 Rejected Ideas and Reasons
+Question: Explain clearly why each shortlisted idea was not selected.
+Solution
+Manual grading with a checklist: still slow and inconsistent. Weight-based sorting: misses surface 
+defects and ripeness. Imported industrial sorter: too costly for small traders.
+5.6 Selected Concept and Justification
+Question: Describe the selected concept and justify the choice.
+Solution
+We selected a camera-based grader with a conveyor and diverter. It scored highest on user impact 
+and innovation, and its cost is within our target of ₹[Z] per unit. It can grade several fruit per second 
+and gives a clear grade and value for each fruit.
+11
+
+
+=== PAGE 12 ===
+Chapter 6: Design
+Portfolio layer: Design | Nirman Lab journey: Week 10
+6.1 Design Overview
+Question: Block diagram, architecture diagram, flowchart or system description of the final design.
+Solution
+Camera and laser detect fruit → AI vision analysis in the browser → grade, shelf life and valuation → 
+conveyor and diverter → sorted bins for Grades A to D and Unripe. Insert the block diagram as 
+Figure 6.1.
+6.2 Design Iterations
+Question: Show Iteration 1, then 2, then 3: what changed and why.
+Solution
+Iteration
+Design / drawing 
+reference
+What changed and why
+Result
+Iteration 1
+Single-angle camera
+Started with one front view
+Missed defects on the 
+underside
+Iteration 2
+Multi-angle inspection
+Added 0°, 90°, 180° and 270° 
+views
+Found a defect at 180° 
+that the single view 
+missed
+Iteration 3
+Auto-rotate with 
+benchmarks
+Added auto-rotate and a 20-
+photo audit
+Clearer checks and 
+more consistent grades
+6.3 Drawings and Models
+Question: CAD, circuit, UI design, simulation set-up, algorithm or mechanical drawings.
+Solution
+Insert the circuit, mechanical and UI drawings. Include the simulation set-up for the conveyor (noted 
+as Simulation Mode in the prototype).
+6.4 Selection of Materials, Components and Tools
+Question: Justify each major choice using engineering reasoning.
+Solution
+ESP32: low cost, built-in Wi-Fi, enough speed for control. Camera: [model], chosen for resolution and 
+price. Laser: used for fruit presence detection because it is simple and reliable. Frame: [material], 
+chosen for low cost and easy repair.
+6.5 Bill of Materials and Cost
+Question: List parts, quantity, unit cost and total.
+Solution
+Item
+Qty
+Unit cost (₹)
+Total (₹)
+ESP32 board
+1
+[ ]
+[ ]
+Camera module
+1
+[ ]
+[ ]
+12
+
+
+=== PAGE 13 ===
+Item
+Qty
+Unit cost (₹)
+Total (₹)
+Laser and sensor
+1
+[ ]
+[ ]
+Conveyor belt and motor
+1
+[ ]
+[ ]
+Diverter / air jet
+1
+[ ]
+[ ]
+Frame and chute
+1
+[ ]
+[ ]
+Total
+[ ]
+13
+
+
+=== PAGE 14 ===
+Chapter 7: Build: Prototype Development
+Portfolio layer: Build | Nirman Lab journey: Weeks 10 and 11
+7.1 Implementation Process
+Question: Explain how you built the prototype step by step.
+Solution
+• Built the web scanner with photo upload, live camera and benchmark views.
+• Implemented grading into Grades A, B, C, D and Unripe, with shelf-life and value estimates.
+• Added nutrition and benefit panels for each grade.
+• Built the conveyor and diverter module and tested the timing.
+• Ran the 7 lab-standard specimens and the 20-photo benchmark audit.
+7.2 Prototype Photographs / Screenshots
+Question: Insert photographs, PCB, 3D prints, software screenshots, with captions.
+Solution
+Insert screenshots as Figure 7.1: the scanner result screen, the benchmark grid, the inspection-angle 
+controls, and the conveyor panel. Add a caption to each.
+7.3 Problems Faced and Solutions
+Question: What went wrong while building and how you fixed it.
+Solution
+• Problem: a defect was hidden on the underside of the fruit. Solution: multi-angle inspection 
+with auto-rotate.
+• Problem: lighting changed the colour readings. Solution: [describe your fix, such as a shaded 
+enclosure].
+• Problem: diverter timing was off. Solution: calculated timing from belt speed (see 4.2).
+7.4 Links to Code, CAD Files and Videos
+Question: GitHub, drive or video links (also keep them in the evidence folder).
+Solution
+Live prototype: https://nirman-lab.vercel.app/
+Code repository: [GitHub link]
+Demo video: [link]
+14
+
+
+=== PAGE 15 ===
+Chapter 8: Validate: Testing and Results
+Portfolio layer: Validate | Nirman Lab journey: Weeks 11 and 12
+8.1 Test Plan
+Question: What was tested, how, with whom, where and when. Success criteria from Chapter 3.
+Solution
+We tested the 7 lab-standard specimens and the 20-photo internet benchmark on [dates] at 
+[location], with [testers]. Success criteria: accuracy of at least [X]%, scan time of about [16] ms, and 
+cost under ₹[Z].
+8.2 User Testing and Feedback
+Question: Summarise user feedback.
+Solution
+#
+Tester (role / age)
+Feedback / observation
+Action taken
+1
+Mandi trader, [age]
+Results were clear and quick
+Kept the grade labels as 
+they are
+2
+Sorting worker, [age]
+Lighting affected the colour reading
+Added a shaded enclosure
+3
+[role, age]
+[feedback]
+[action]
+8.3 Results and Performance
+Question: Graphs, measurements and before vs after comparison.
+Solution
+Specimen
+Expected grade
+Predicted grade
+Match?
+Export Eureka
+A
+[ ]
+[ ]
+Supermarket Meyer
+B
+[ ]
+[ ]
+Juicing and Pectin
+C
+[ ]
+[ ]
+Anthracnose Rot
+D
+[ ]
+[ ]
+Penicillium Mold
+D
+[ ]
+[ ]
+Unripe Green Citrus
+Unripe
+[ ]
+[ ]
+Overall accuracy
+[X]% of [N]
+Insert the performance graph as Figure 8.1. Report measured scan time for each fruit.
+8.4 Failure Analysis
+Question: What failed, why it failed and what you learned.
+Solution
+The system misclassified [number] specimens. The main cause was [cause, such as lighting or a 
+hidden defect]. We learned that a single viewing angle is not enough for reliable grading.
+15
+
+
+=== PAGE 16 ===
+8.5 Improvements and Refinement
+Question: Changes made from feedback and the improvement achieved.
+Solution
+Feedback
+Change made
+Improvement observed
+Defects missed on the underside
+Multi-angle inspection
+[measured improvement]
+Lighting changed the colour 
+reading
+Shaded enclosure
+[measured improvement]
+16
+
+
+=== PAGE 17 ===
+Chapter 9: Impact: SDG, Ethics, Safety and Cost
+Portfolio layer: Impact | Nirman Lab journey: Week 12
+9.1 Beneficiaries
+Question: Who benefits and how many people could benefit?
+Solution
+Direct beneficiaries: about [number] traders and workers at [mandi name]. Indirect beneficiaries: 
+farmers who supply the mandi and consumers who buy the fruit.
+9.2 SDG Impact
+Question: SDG number, target and how your solution contributes, with indicators if possible.
+Solution
+SDG 12, Target 12.3: fewer post-harvest losses. Indicator: percentage of crates rejected before and 
+after using CitrusSense, measured as [X]% and [Y]%.
+9.3 Cost, Environmental and Social Impact
+Question: Cost reduction, resource use, environmental effect, social or community effect.
+Solution
+Cost: unit cost of ₹[Z] against imported sorters that cost far more. Environmental: less food wasted, 
+so less water and energy lost. Social: a simple tool that helps small traders compete on quality.
+9.4 Ethics and Safety
+Question: Privacy, consent, fairness, safety risks and how you handled them.
+Solution
+Consent was taken from all respondents, and no personal data is stored. Safety: guards on moving 
+parts, safe wiring and a switch to stop the conveyor. Fairness: the grade labels are estimates and are 
+not an official certification.
+9.5 Scalability and Sustainability
+Question: Could it be used elsewhere? Who could continue it?
+Solution
+It could be used in other mandis and for other citrus varieties. The mandi committee, a local startup 
+or [named group] could continue the work.
+17
+
+
+=== PAGE 18 ===
+Chapter 10: Reflection, Conclusion and Future Work
+Portfolio layer: Reflection | Nirman Lab journey: Weeks 13 and 14
+10.1 Conclusion
+Question: Summarise the problem, solution and key results. State whether your objectives were met.
+Solution
+The problem was spoiled citrus mixed with good fruit in a mandi. CitrusSense grades fruit with 
+computer vision and a conveyor sorter. In validation it reached [X]% accuracy and [16] ms per scan. 
+Objectives 1 and 2 were [met / partly met], and objective 3 was [met / not met].
+10.2 Reflection
+Question: Answer in your own words: What surprised me? What failed? What would I change? Which 
+engineering concepts became clearer? How has my thinking changed?
+Solution
+What surprised me was how much the underside of the fruit mattered. What failed was lighting, 
+which changed the colour readings. I would change the enclosure first. Image processing and control 
+timing became clearer to me through the build. My thinking changed from building a fast gadget to 
+building something traders can trust.
+10.3 Limitations
+Question: Honest limits of your work.
+Solution
+• Lighting sensitivity and a fixed camera position.
+• Only [N] specimens and a 20-photo benchmark were tested.
+• Part of the system was tested in simulation mode.
+• Shelf-life and nutrition values are estimates from general food science.
+10.4 Future Work
+Question: What could be done next, and by whom?
+Solution
+• Train on a larger labelled dataset (mandi team).
+• Build an enclosed lighting box (student team).
+• Run a real-world trial at the mandi (mandi committee and student team).
+• Check grades against official standards (faculty and APEDA guidance).
+18
+
+
+=== PAGE 19 ===
+References
+IEEE style, numbered in order of citation. Cite papers, patents, government schemes, websites and 
+interviews.
+[1] A. Author, B. Author, “Title of paper,” Journal Name, vol. [ ], no. [ ], pp. [ ], [year]. (Replace with a 
+paper you have read.)
+[2] Codex Alimentarius, “Codex Standard for Fresh Citrus Fruits (CODEX STAN 243-2003),” [Online]. 
+Available: [URL] (accessed [Month DD, YYYY]).
+[3] [Organisation], “[Title of guidance],” [Year]. [Online]. Available: [URL] (accessed [Month DD, 
+YYYY]).
+[4] [Name of interviewee], [role], personal interview, [location], [date].
+19
+
+
+=== PAGE 20 ===
+Appendices
+Attach supporting evidence. Label each appendix and refer to it in the chapters.
+• Appendix A: Survey questionnaire and response data
+• Appendix B: Interview transcripts and consent forms
+• Appendix C: Additional photographs and field notes
+• Appendix D: Sketches, brainstorming sheets and design drawings
+• Appendix E: Code, CAD files, simulation files and links
+• Appendix F: Copy of Nirman Lab Project Diary and Logbook (signed pages)
+• Appendix G: Poster, presentation and expo feedback
+20
+
+

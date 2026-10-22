@@ -1,0 +1,723 @@
+/* ==============================================================================
+   Nirman Lab: Industrial Hardware Console Styles (Pure Vanilla CSS)
+   CitrusSense Autonomous Optical Sorter
+   ============================================================================== */
+
+/* Layout & Grid Architecture */
+.main-workstation-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  .main-workstation-grid {
+    grid-template-columns: 4.6fr 7.4fr;
+    align-items: stretch;
+  }
+}
+
+/* Flexbox Helpers */
+.flex { display: flex; }
+.inline-flex { display: inline-flex; }
+.flex-col { flex-direction: column; }
+.flex-1 { flex: 1 1 0%; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.items-baseline { align-items: baseline; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end { justify-content: flex-end; }
+.shrink-0 { flex-shrink: 0; }
+.gap-1 { gap: 0.25rem; }
+.gap-1\.5 { gap: 0.375rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-2\.5 { gap: 0.625rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-3\.5 { gap: 0.875rem; }
+.gap-4 { gap: 1rem; }
+.gap-5 { gap: 1.25rem; }
+.gap-6 { gap: 1.5rem; }
+.gap-7 { gap: 1.75rem; }
+.gap-8 { gap: 2rem; }
+.gap-10 { gap: 2.5rem; }
+
+/* Grid Helpers */
+.grid { display: grid; }
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+
+@media (min-width: 640px) {
+  .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sm\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .sm\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .sm\:grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .lg\:grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .lg\:col-span-5 { grid-column: span 5 / span 5; }
+  .lg\:col-span-7 { grid-column: span 7 / span 7; }
+}
+
+/* Dimensions & Aspects */
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.w-1\.5 { width: 0.375rem; }
+.h-1\.5 { height: 0.375rem; }
+.w-2 { width: 0.5rem; }
+.h-2 { height: 0.5rem; }
+.w-2\.5 { width: 0.625rem; }
+.h-2\.5 { height: 0.625rem; }
+.w-3 { width: 0.75rem; }
+.h-3 { height: 0.75rem; }
+.w-3\.5 { width: 0.875rem; }
+.h-3\.5 { height: 0.875rem; }
+.w-4 { width: 1rem; }
+.h-4 { height: 1rem; }
+.w-6 { width: 1.5rem; }
+.h-6 { height: 1.5rem; }
+.w-8 { width: 2rem; }
+.h-8 { height: 2rem; }
+.w-9 { width: 2.25rem; }
+.h-9 { height: 2.25rem; }
+.w-10 { width: 2.5rem; }
+.h-10 { height: 2.5rem; }
+.w-28 { width: 7rem; }
+.w-px { width: 1px; }
+.h-px { height: 1px; }
+.min-w-\[110px\] { min-width: 110px; }
+.min-w-\[120px\] { min-width: 120px; }
+.max-w-xs { max-width: 20rem; }
+.max-w-sm { max-width: 24rem; }
+.max-w-md { max-width: 28rem; }
+.max-w-lg { max-width: 32rem; }
+.max-w-xl { max-width: 36rem; }
+.max-w-2xl { max-width: 42rem; }
+.max-w-3xl { max-width: 48rem; }
+.max-w-4xl { max-width: 56rem; }
+.max-w-5xl { max-width: 64rem; }
+.max-w-6xl { max-width: 72rem; }
+.max-w-7xl { max-width: 80rem; }
+.max-w-\[280px\] { max-width: 280px; }
+.max-w-\[320px\] { max-width: 320px; }
+.max-w-\[420px\] { max-width: 420px; }
+.max-h-\[280px\] { max-height: 280px; }
+.max-h-\[320px\] { max-height: 320px; }
+.max-h-\[380px\] { max-height: 380px; }
+.max-h-\[90vh\] { max-height: 90vh; }
+.aspect-\[4\/3\] { aspect-ratio: 4 / 3; }
+.aspect-\[4\/5\] { aspect-ratio: 4 / 5; }
+.aspect-\[4\/4\.8\] { aspect-ratio: 4 / 4.8; }
+
+/* Positioning & Display */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.inset-0 { inset: 0; }
+.top-0 { top: 0; }
+.top-2 { top: 0.5rem; }
+.top-3 { top: 0.75rem; }
+.top-4 { top: 1rem; }
+.bottom-0 { bottom: 0; }
+.bottom-2 { bottom: 0.5rem; }
+.bottom-3 { bottom: 0.75rem; }
+.bottom-4 { bottom: 1rem; }
+.left-0 { left: 0; }
+.left-3 { left: 0.75rem; }
+.left-4 { left: 1rem; }
+.right-0 { right: 0; }
+.right-3 { right: 0.75rem; }
+.right-4 { right: 1rem; }
+.top-1\/2 { top: 50%; }
+.left-1\/2 { left: 50%; }
+.-translate-y-1\/2 { transform: translateY(-50%); }
+.-translate-x-1\/2 { transform: translateX(-50%); }
+.overflow-hidden { overflow: hidden; }
+.overflow-y-auto { overflow-y: auto; }
+.overflow-x-auto { overflow-x: auto; }
+.pointer-events-none { pointer-events: none; }
+.select-none { user-select: none; }
+.block { display: block; }
+.hidden { display: none; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+/* Spacing */
+.p-1 { padding: 0.25rem; }
+.p-2 { padding: 0.5rem; }
+.p-2\.5 { padding: 0.625rem; }
+.p-3 { padding: 0.75rem; }
+.p-3\.5 { padding: 0.875rem; }
+.p-4 { padding: 1rem; }
+.p-5 { padding: 1.25rem; }
+.p-6 { padding: 1.5rem; }
+.px-1 { padding-left: 0.25rem; padding-right: 0.25rem; }
+.px-1\.5 { padding-left: 0.375rem; padding-right: 0.375rem; }
+.px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.px-2\.5 { padding-left: 0.625rem; padding-right: 0.625rem; }
+.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+.px-3\.5 { padding-left: 0.875rem; padding-right: 0.875rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-0\.5 { padding-top: 0.125rem; padding-bottom: 0.125rem; }
+.py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+.py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.py-3\.5 { padding-top: 0.875rem; padding-bottom: 0.875rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.my-1 { margin-top: 0.25rem; margin-bottom: 0.25rem; }
+.my-2 { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.mt-0\.5 { margin-top: 0.125rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mr-1 { margin-right: 0.25rem; }
+
+.space-y-1 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.25rem; }
+.space-y-1\.5 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.375rem; }
+.space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.5rem; }
+.space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.75rem; }
+.space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
+.space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem; }
+
+/* Margins & Alignment Helpers */
+.mb-0\.5 { margin-bottom: 0.125rem; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-1\.5 { margin-bottom: 0.375rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mt-0\.5 { margin-top: 0.125rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-1\.5 { margin-top: 0.375rem; }
+.mt-2 { margin-top: 0.5rem; }
+.ml-auto { margin-left: auto; }
+.mr-auto { margin-right: auto; }
+
+/* Alpha Background & Border Utilities */
+.bg-white\/5 { background-color: rgba(255, 255, 255, 0.05); }
+.bg-white\/10 { background-color: rgba(255, 255, 255, 0.1); }
+.bg-white\/15 { background-color: rgba(255, 255, 255, 0.15); }
+.bg-white\/20 { background-color: rgba(255, 255, 255, 0.2); }
+.border-white\/10 { border-color: rgba(255, 255, 255, 0.1); }
+.border-white\/15 { border-color: rgba(255, 255, 255, 0.15); }
+.border-white\/20 { border-color: rgba(255, 255, 255, 0.2); }
+
+/* Borders & Rounding */
+.border { border: 1px solid; }
+.border-2 { border: 2px solid; }
+.border-b { border-bottom: 1px solid; }
+.border-b-2 { border-bottom: 2px solid; }
+.border-t { border-top: 1px solid; }
+.border-l-2 { border-left: 2px solid; }
+.border-r-2 { border-right: 2px solid; }
+.border-y-4 { border-top: 4px solid; border-bottom: 4px solid; }
+.border-transparent { border-color: transparent; }
+.rounded { border-radius: 4px; }
+.rounded-sm { border-radius: 2px; }
+.rounded-md { border-radius: 6px; }
+.rounded-lg { border-radius: 8px; }
+.rounded-xl { border-radius: 12px; }
+.rounded-2xl { border-radius: 16px; }
+.rounded-3xl { border-radius: 24px; }
+.rounded-full { border-radius: 9999px; }
+
+/* Modern Depth, Shadows & Blur */
+.shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4); }
+.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5); }
+.shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6); }
+.shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
+
+.backdrop-blur-sm { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.backdrop-blur-md { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.backdrop-blur-lg { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.backdrop-blur-xl { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+.backdrop-blur-2xl { backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); }
+
+/* Tactile Micro-Interactions */
+.active\:scale-95:active { transform: scale(0.95); }
+.active\:scale-\[0\.97\]:active { transform: scale(0.97); }
+.min-h-\[38px\] { min-height: 38px; }
+.min-h-\[64px\] { min-height: 64px; }
+.min-h-\[72px\] { min-height: 72px; }
+.aspect-\[2\/1\] { aspect-ratio: 2 / 1; }
+.aspect-\[2\.4\/1\] { aspect-ratio: 2.4 / 1; }
+.max-h-\[220px\] { max-height: 220px; }
+.line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+
+/* Typography - Strict Legibility Standard (Minimum 12.5px for micro-badges, 13px for xs, 14px for sm) */
+.text-\[8px\], .text-\[9px\], .text-\[10px\], .text-\[11px\] { font-size: 0.775rem; line-height: 1.15; }
+.text-xs { font-size: 0.8125rem; line-height: 1.25rem; } /* 13px */
+.text-sm { font-size: 0.875rem; line-height: 1.375rem; } /* 14px */
+.text-base { font-size: 1rem; line-height: 1.5rem; } /* 16px */
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; } /* 18px */
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; } /* 20px */
+.text-2xl { font-size: 1.5rem; line-height: 2rem; } /* 24px */
+.text-3xl { font-size: 1.875rem; line-height: 2.25rem; } /* 30px */
+.text-4xl { font-size: 2.25rem; line-height: 2.5rem; } /* 36px */
+.text-5xl { font-size: 3rem; line-height: 1.1; } /* 48px */
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.font-extrabold { font-weight: 800; }
+.font-black { font-weight: 900; }
+
+/* Contrast-Enhanced Color Mapping (Eliminating Unreadable Dark Muddy Grays) */
+.text-\[\#505864\], .text-\[\#64748b\], .text-\[\#717882\] { color: #94a3b8 !important; }
+.text-\[\#848f9d\], .text-\[\#8b929a\] { color: #cbd5e1 !important; }
+.uppercase { text-transform: uppercase; }
+.italic { font-style: italic; }
+.not-italic { font-style: normal; }
+.tracking-tight { letter-spacing: -0.025em; }
+.tracking-wide { letter-spacing: 0.025em; }
+.tracking-wider { letter-spacing: 0.05em; }
+.tracking-widest { letter-spacing: 0.1em; }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.leading-relaxed { line-height: 1.625; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.whitespace-nowrap { white-space: nowrap; }
+
+/* Animations */
+.animate-ping { animation: ping 1.2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+.animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.animate-spin { animation: spin 1s linear infinite; }
+
+@keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+@keyframes pulse { 50% { opacity: 0.5; } }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+@keyframes conveyorBeltMotion {
+  0% { background-position: 0px 0px; }
+  100% { background-position: 24px 0px; }
+}
+
+.backdrop-blur-sm { backdrop-filter: blur(4px); }
+.backdrop-blur-md { backdrop-filter: blur(12px); }
+.cursor-pointer { cursor: pointer; }
+
+/* ==============================================================================
+   PhytoSonic Hardware Console Styles
+   ============================================================================== */
+.console-frame {
+  max-width: 1360px;
+  margin: 1rem auto;
+  padding: 1.25rem;
+  background: #17191c;
+  border: 2px solid #282b30;
+  border-radius: 14px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.screw {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #282c32;
+  border: 1px solid #16181b;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0,0,0,0.5);
+  position: absolute;
+}
+.screw::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 2px;
+  width: 6px;
+  height: 1px;
+  background: #0f1012;
+}
+.screw-tl { top: 8px; left: 8px; }
+.screw-tr { top: 8px; right: 8px; }
+.screw-bl { bottom: 8px; left: 8px; }
+.screw-br { bottom: 8px; right: 8px; }
+
+.module-bay {
+  background: #0e0f11;
+  border: 1px solid #282b30;
+  border-radius: 10px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.tactile-btn {
+  background: #24272c;
+  border: 1px solid #363b43;
+  color: #ececec;
+  padding: 0.5rem 0.85rem;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 0 #141618, 0 3px 6px rgba(0,0,0,0.4);
+  transition: all 0.08s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  user-select: none;
+}
+.tactile-btn:hover {
+  background: #2a2e34;
+  border-color: #444b55;
+  color: #ffffff;
+}
+.tactile-btn:active, .tactile-btn.active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 #141618, inset 0 2px 4px rgba(0,0,0,0.6);
+  background: #1c1e22;
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+.toggle-switch-housing {
+  display: flex;
+  background: #0a0b0d;
+  padding: 3px;
+  border-radius: 6px;
+  border: 1px solid #23262b;
+}
+
+.toggle-option {
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #727982;
+  border-radius: 4px;
+  transition: all 0.12s ease;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+.toggle-option.selected {
+  background: #23272e;
+  color: #f1f2f4;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.crt-screen {
+  background: #021308;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #0f4024;
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.95), inset 0 0 15px rgba(16, 185, 129, 0.2);
+}
+.crt-screen::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(2, 19, 8, 0) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(52, 211, 153, 0.03), rgba(16, 185, 129, 0.02), rgba(52, 211, 153, 0.03));
+  background-size: 100% 3px, 3px 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.led-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  background: #0f2c1b;
+  border: 1px solid #144027;
+}
+.led-indicator.amber-on {
+  background: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+}
+.led-indicator.green-on {
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+/* ==============================================================================
+   PhytoTouch Studio Component Styles (Botanical Nature Guarantees)
+   ============================================================================== */
+.phyto-preset-card {
+  background: linear-gradient(180deg, rgba(10, 32, 21, 0.88) 0%, rgba(5, 18, 12, 0.95) 100%) !important;
+  border: 1px solid rgba(52, 211, 153, 0.20) !important;
+  color: #f0fdf4 !important;
+  padding: 0.85rem !important;
+  border-radius: 18px !important;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex !important;
+  flex-direction: column !important;
+  text-align: left !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(167, 243, 208, 0.08) !important;
+}
+.phyto-preset-card:hover {
+  background: linear-gradient(180deg, rgba(14, 44, 28, 0.95) 0%, rgba(8, 26, 17, 0.98) 100%) !important;
+  border-color: rgba(52, 211, 153, 0.45) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.6), 0 0 20px rgba(16, 185, 129, 0.2) !important;
+}
+.phyto-preset-card.active {
+  background: linear-gradient(180deg, rgba(12, 48, 30, 0.95) 0%, rgba(6, 28, 18, 0.98) 100%) !important;
+  border-color: #34d399 !important;
+  box-shadow: 0 0 24px rgba(52, 211, 153, 0.45), inset 0 1px 0 rgba(167, 243, 208, 0.3) !important;
+}
+
+.phyto-touch-pad {
+  background: linear-gradient(180deg, rgba(11, 35, 23, 0.9) 0%, rgba(6, 20, 13, 0.95) 100%) !important;
+  border: 1px solid rgba(52, 211, 153, 0.25) !important;
+  color: #f0fdf4 !important;
+  border-radius: 18px !important;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.12s ease;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.75rem 0.35rem !important;
+  min-height: 72px !important;
+  touch-action: manipulation !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(167, 243, 208, 0.1) !important;
+}
+.phyto-touch-pad:hover {
+  background: linear-gradient(180deg, rgba(16, 48, 32, 0.95) 0%, rgba(9, 28, 18, 0.98) 100%) !important;
+  border-color: rgba(52, 211, 153, 0.5) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), 0 0 18px rgba(16, 185, 129, 0.25) !important;
+}
+.phyto-touch-pad.active,
+.phyto-touch-pad:active {
+  background: linear-gradient(180deg, #10b981 0%, #059669 100%) !important;
+  border-color: #a7f3d0 !important;
+  color: #ffffff !important;
+  transform: translateY(2px) scale(0.96) !important;
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.8), 0 0 12px #34d399 !important;
+}
+
+.phyto-badge {
+  background: rgba(4, 20, 13, 0.92) !important;
+  border: 1px solid rgba(52, 211, 153, 0.30) !important;
+  color: #dcfce7 !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 14px rgba(16, 185, 129, 0.15) !important;
+}
+
+/* 7-Channel Grid Layout */
+.grid-cols-7 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+@media (min-width: 640px) {
+  .sm\:grid-cols-7 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+}
+
+/* ==============================================================================
+   3-Style Live Preview Themes
+   ============================================================================== */
+
+/* Style 1: Modern Minimalist & Industrial Pro (Apple Pro / Teenage Engineering) */
+.theme-style1 {
+  background: #090c10 !important;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, rgba(56, 189, 248, 0.08) 0%, transparent 50%) !important;
+}
+.theme-style1 .glass-panel {
+  background: linear-gradient(180deg, rgba(14, 20, 27, 0.92) 0%, rgba(9, 13, 19, 0.96) 100%) !important;
+  border-color: rgba(16, 185, 129, 0.25) !important;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.8), 0 0 25px rgba(16, 185, 129, 0.08) !important;
+}
+
+/* Style 3: Warm Organic Conservatory (Terracotta & Olive Moss) */
+.theme-style3 {
+  background: #180f0a !important;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(217, 119, 6, 0.18) 0%, transparent 65%),
+    radial-gradient(circle at 15% 45%, rgba(101, 163, 13, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 85% 70%, rgba(180, 83, 9, 0.12) 0%, transparent 55%) !important;
+}
+.theme-style3 .glass-panel {
+  background: linear-gradient(180deg, rgba(38, 22, 15, 0.94) 0%, rgba(22, 12, 8, 0.98) 100%) !important;
+  border-color: rgba(217, 119, 6, 0.35) !important;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.8), 0 0 25px rgba(217, 119, 6, 0.12) !important;
+}
+.theme-style3 .text-\[\#86efac\],
+.theme-style3 .text-\[\#a7f3d0\] {
+  color: #fed7aa !important;
+}
+.theme-style3 .text-\[\#34d399\] {
+  color: #f59e0b !important;
+}
+
+/* Style 4: Vedic Indian Classical Saptak (Royal Forest Emerald, Brushed Copper, Temple Gold) */
+.theme-style4 {
+  background: #031309 !important;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.20) 0%, transparent 60%),
+    radial-gradient(circle at 20% 50%, rgba(180, 83, 9, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 75%, rgba(16, 185, 129, 0.12) 0%, transparent 55%) !important;
+}
+.theme-style4 .glass-panel {
+  background: linear-gradient(180deg, rgba(6, 28, 17, 0.95) 0%, rgba(2, 14, 8, 0.98) 100%) !important;
+  border-color: rgba(245, 158, 11, 0.38) !important;
+  box-shadow: 0 18px 40px -8px rgba(0, 0, 0, 0.85), 0 0 30px rgba(245, 158, 11, 0.15) !important;
+}
+.theme-style4 .text-\[\#86efac\],
+.theme-style4 .text-\[\#a7f3d0\] {
+  color: #fde047 !important;
+}
+.theme-style4 .text-\[\#34d399\] {
+  color: #f59e0b !important;
+}
+
+/* High-Contrast Color Utilities */
+.text-white { color: #ffffff !important; }
+.text-black { color: #000000 !important; }
+.text-slate-100 { color: #f1f5f9 !important; }
+.text-slate-200 { color: #e2e8f0 !important; }
+.text-slate-300 { color: #cbd5e1 !important; }
+.text-slate-400 { color: #94a3b8 !important; }
+.text-slate-500 { color: #64748b !important; }
+.text-amber-200 { color: #fde68a !important; }
+.text-amber-300 { color: #fcd34d !important; }
+.text-amber-400 { color: #fbbf24 !important; }
+.text-amber-500 { color: #f59e0b !important; }
+.text-emerald-300 { color: #6ee7b7 !important; }
+.text-emerald-400 { color: #34d399 !important; }
+.text-emerald-500 { color: #10b981 !important; }
+.text-cyan-300 { color: #67e8f9 !important; }
+.text-cyan-400 { color: #22d3ee !important; }
+.text-rose-400 { color: #fb7185 !important; }
+.text-purple-400 { color: #c084fc !important; }
+.whitespace-nowrap { white-space: nowrap !important; }
+
+/* Botanical High-Contrast Color Palette for Classic Workstation */
+.text-\[\#86efac\] { color: #86efac !important; }
+.text-\[\#a7f3d0\] { color: #a7f3d0 !important; }
+.text-\[\#34d399\] { color: #34d399 !important; }
+.text-\[\#10b981\] { color: #10b981 !important; }
+.text-\[\#f0fdf4\] { color: #f0fdf4 !important; }
+.text-\[\#dcfce7\] { color: #dcfce7 !important; }
+.text-\[\#2dd4bf\] { color: #2dd4bf !important; }
+.text-\[\#6ee7b7\] { color: #6ee7b7 !important; }
+.text-\[\#fde047\] { color: #fde047 !important; }
+.text-\[\#fef08a\] { color: #fef08a !important; }
+.text-\[\#fbbf24\] { color: #fbbf24 !important; }
+.text-\[\#fed7aa\] { color: #fed7aa !important; }
+.text-\[\#fef3c7\] { color: #fef3c7 !important; }
+.text-\[\#022312\] { color: #022312 !important; }
+.text-\[\#b45309\] { color: #b45309 !important; }
+
+/* Botanical Workstation Backgrounds & Glass Panels */
+.bg-\[\#092619\]\/90,
+.bg-\[\#092619\]\/80 {
+  background: rgba(9, 38, 25, 0.94) !important;
+}
+
+.bg-\[\#082417\]\/85,
+.bg-\[\#082417\] {
+  background: rgba(8, 36, 23, 0.94) !important;
+}
+
+.bg-\[\#072417\]\/85,
+.bg-\[\#072417\] {
+  background: rgba(7, 36, 23, 0.94) !important;
+}
+
+.bg-\[\#04170e\]\/90,
+.bg-\[\#04170e\] {
+  background: rgba(4, 23, 14, 0.94) !important;
+}
+
+.bg-\[\#03140a\] {
+  background: #03140a !important;
+}
+
+.bg-\[\#0e3522\] {
+  background: #0e3522 !important;
+}
+
+.bg-\[\#10b981\] {
+  background: #10b981 !important;
+}
+
+.bg-\[\#10b981\]\/20,
+.bg-\[\#10b981\]\/25,
+.bg-\[\#10b981\]\/30,
+.bg-\[\#10b981\]\/40 {
+  background: rgba(16, 185, 129, 0.22) !important;
+}
+
+.bg-\[\#f59e0b\] {
+  background: #f59e0b !important;
+}
+
+.bg-\[\#f59e0b\]\/20,
+.bg-\[\#f59e0b\]\/30 {
+  background: rgba(245, 158, 11, 0.25) !important;
+}
+
+.bg-\[\#14b8a6\]\/20 {
+  background: rgba(20, 184, 166, 0.22) !important;
+}
+
+/* Botanical Workstation Border Colors */
+.border-\[\#10b981\]\/20,
+.border-\[\#10b981\]\/25,
+.border-\[\#10b981\]\/30,
+.border-\[\#10b981\]\/35,
+.border-\[\#10b981\]\/40,
+.border-\[\#10b981\]\/50 {
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+.border-\[\#34d399\]\/40 {
+  border-color: rgba(52, 211, 153, 0.45) !important;
+}
+
+.border-\[\#6ee7b7\] {
+  border-color: #6ee7b7 !important;
+}
+
+.border-\[\#f59e0b\]\/25,
+.border-\[\#f59e0b\]\/40 {
+  border-color: rgba(245, 158, 11, 0.4) !important;
+}
+
+.border-\[\#14b8a6\]\/30 {
+  border-color: rgba(20, 184, 166, 0.35) !important;
+}
+
+/* Universal Control Resets for Dark Workstation */
+select {
+  background-color: #03140a !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+}
+
+select option {
+  background-color: #062417 !important;
+  color: #ffffff !important;
+}
+
+button {
+  outline: none;
+  font-family: inherit;
+}

@@ -1,0 +1,8 @@
+swara_order,swara_code,devanagari,swara_full_name,shruti_name,just_intonation_ratio,ratio_decimal,freq_432hz_verdi_hz,freq_440hz_equal_temperament_hz,frequency_delta_hz,cent_deviation,esp32_channel,esp32_gpio_pin,esp32_touch_pad,botanical_zone,chakra_harmonic,nature_soundscape_resonance
+1,Sa,सा,Shadja (The Originator),Kshobhini,1/1,1.0,216.0,220.0,-4.0,-31.77,Ch 1,4,Touch 0,Apex Sprout / Young Leaf,Muladhara (Root),Earth Ground Drone & Deep Sap Pulse
+2,Re,रे,Rishabha (Chatushruti Re),Raktika,9/8,1.125,243.0,246.94,-3.94,-27.85,Ch 2,14,Touch 6,Upper Foliage,Svadhisthana (Sacral),Fluidic Xylem Circulation
+3,Ga,ग,Gandhara (Antara Ga),Raudri,5/4,1.25,270.0,277.18,-7.18,-45.45,Ch 3,15,Touch 3,Mid Canopy Leaf Tip,Manipura (Solar Plexus),Solar Chlorophyll Photosynthesis
+4,Ma,म,Madhyama (Shuddha Ma),Vajrika,4/3,1.33333,288.0,293.66,-5.66,-33.69,Ch 4,13,Touch 4,Basal Petiole / Main Stem,Anahata (Heart),Stomatal Vapor Respiration
+5,Pa,प,Panchama (Perfect Fifth),Sandipani,3/2,1.5,324.0,329.63,-5.63,-29.82,Ch 5,12,Touch 5,Soil Probe / Rhizosphere,Vishuddha (Throat),Root Ionic Absorption Harmonic
+6,Dha,ध,Dhaivata (Chatushruti Dha),Madanti,5/3,1.66667,360.0,369.99,-9.99,-47.38,Ch 6,27,Touch 7,Lateral Leaf Blade,Ajna (Third Eye),Foliar Acoustic Transduction
+7,Ni,नि,Nishada (Kakali Ni),Kumudvati,15/8,1.875,405.0,415.3,-10.3,-43.52,Ch 7,33,Touch 8 / ADC1,Base Stolon / Root Collar,Sahasrara (Crown),Cosmic Flora Biophotonic Ether
